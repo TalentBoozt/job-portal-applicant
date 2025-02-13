@@ -1,0 +1,72 @@
+.hire-card{
+  width: 100%;
+  height: 100%;
+  margin: max(30px, 3vw) 0;
+  background-color: var(--color-surface-100);
+  border-radius: 12px;
+  //background-image: linear-gradient(to right, var(--color-primary-400), var(--color-primary-200) 30%, var(--color-secondary-200), var(--color-secondary-300));
+
+  .img-wrapper{
+    width: 100%;
+    height: 100%;
+    padding-left: 20px;
+    display: flex;
+    align-items: flex-end;
+
+    img{
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .text-wrapper{
+    width: 100%;
+    height: 100%;
+    padding: 20px 20px 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .content-wrapper{
+      width: 100%;
+
+      h1{
+        font-weight: 500;
+        margin: 6px 0;
+        letter-spacing: 5px;
+
+        span{
+          color: var(--color-primary-200);
+        }
+      }
+
+      p{
+        font-size: max(16px, 1.5vw);
+        font-weight: 400;
+        color: var(--color-text-200);
+
+        span{
+          color: var(--color-highlight-100);
+        }
+      }
+
+      .get-started{
+        padding: 10px 25px;
+        border: 1px solid var(--color-surface-100);
+        outline: none;
+        border-radius: 12px;
+        font-size: 20px;
+        font-weight: 600;
+        color: #FFFFFF;
+        background-color: var(--color-secondary-100);
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover{
+          background-color: var(--color-secondary-200);
+        }
+      }
+    }
+  }
+}

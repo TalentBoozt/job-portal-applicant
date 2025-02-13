@@ -1,0 +1,186 @@
+@media print {
+  @page {
+    margin: 20mm;
+  }
+
+  @page :first {
+    header: "Custom Header for Page 1";
+  }
+
+  body {
+    visibility: hidden; /* Hide everything except #cv */
+  }
+
+  #cv {
+    visibility: visible;
+    width: 100%;
+    margin: 0 auto;
+    display: block !important;
+    padding: 20px; /* Optional for better layout */
+  }
+
+  /* Prevent breaking of critical sections */
+  #cv > * {
+    page-break-inside: avoid; /* Prevent breaking in the middle of elements */
+    break-inside: avoid; /* Modern equivalent */
+    margin-bottom: 20px;
+  }
+
+  /* Ensure specific sections break onto new pages if needed */
+  .experiences,
+  .educations,
+  .skills,
+  .projects,
+  .certificates {
+    page-break-before: auto;
+    page-break-after: auto;
+  }
+
+  /* Remove unnecessary styling */
+  .form-card-1,
+  .customization {
+    display: none; /* Hide customization form */
+  }
+
+  /* Enforce page breaks for manual control */
+  .page-break {
+    page-break-before: always;
+    break-before: always; /* Modern browsers */
+  }
+}
+
+.customization{
+  .form-check{
+    .form-check-input{
+      width: auto;
+      margin-right: 4px;
+    }
+  }
+}
+
+.cv-render{
+  width: 210mm; /* A4 width */
+  min-height: 297mm; /* A4 height */
+  padding: 20mm;
+  margin: max(30px, 5vw) auto;
+  background-color: var(--color-surface-200);
+  -webkit-box-shadow: 0 4px 6px -8px var(--color-box-shadow-100);
+  -moz-box-shadow: 0 4px 6px -8px var(--color-box-shadow-100);
+  box-shadow: 0 4px 6px -8px var(--color-box-shadow-100);
+  font-family: Arial, sans-serif;
+
+  .image-wrapper{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    overflow: hidden;
+
+    img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .name{
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .role{
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  .contact-info{
+    color: var(--color-text-300);
+    font-size: 18px;
+  }
+  .intro{
+    text-align: justify;
+  }
+
+  .experiences, .educations, .skills, .projects, .certificates{
+    margin: 16px 0;
+    h5{
+      font-size: 16px;
+      margin: 20px 0;
+      font-weight: 600;
+      color: var(--color-text-300);
+      text-transform: capitalize;
+    }
+
+    .company, .degree, .name{
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    .position, .institution, .location{
+      font-size: 18px;
+      color: var(--color-text-300);
+      margin-bottom: 5px;
+    }
+    .description{
+      text-align: left;
+      color: var(--color-text-300);
+      margin-bottom: 10px;
+    }
+
+    .sm-text{
+      font-size: 14px;
+      color: var(--color-text-300);
+    }
+
+    .skills-wrapper{
+      display: flex;
+      flex-wrap: wrap;
+
+      .skill{
+        width: fit-content;
+        padding: 3px 8px;
+        border-radius: 5px;
+        background-color: var(--color-surface-mixed-100);
+        color: var(--color-text-200);
+        font-size: 16px;
+        margin: 2px;
+      }
+    }
+
+    .certificate{
+      width: 100%;
+      min-height: 150px;
+      background-color: var(--color-surface-mixed-300);
+      padding: 12px;
+
+      .organization{
+        font-size: 17px;
+        font-weight: 550;
+        color: var(--color-text-100);
+      }
+
+      .title, .date{
+        color: var(--color-text-100);
+        font-size: 15px;
+      }
+
+      .date{
+        color: var(--color-text-200);
+      }
+
+      .view, .id{
+        font-size: 13px;
+        color: var(--color-text-100);
+
+        a{
+          text-decoration: none;
+          font-size: 13px;
+          color: var(--color-primary-200);
+          transition: all .3s ease-in;
+
+          &:hover{
+            color: var(--color-primary-100);
+          }
+        }
+      }
+    }
+  }
+}

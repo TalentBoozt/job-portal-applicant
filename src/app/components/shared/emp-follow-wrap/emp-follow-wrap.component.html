@@ -1,0 +1,58 @@
+<div class="container" style="min-height: calc(100vh - 200px);">
+  <div class="row flex-row-reverse">
+    <div class="col-12 col-md-6 col-lg-5">
+
+      <div class="d-flex align-items-center justify-content-end w-100">
+        <button class="close-button" (click)="closeWrapper()">X</button>
+      </div>
+
+      <div class="employee-data-wrapper">
+        <div class="image-wrapper">
+          <img [src]="employee?.employee?.image || './assets/imgs/shared/default_emp_dp.svg'" alt="banner" loading="lazy">
+        </div>
+        <div class="name-tag">{{employee?.employee?.firstname || 'N/A'}} {{employee?.employee?.lastname || ' '}}</div>
+        <div class="career-tag">{{employee?.employee?.occupation || ' '}}</div>
+        <table>
+          <tr class="py-2">
+            <td><div class="icon">
+              <i class="material-icons">people</i>
+            </div></td>
+            <td>
+              <div class="d-flex align-items-center justify-content-start w-100">
+                <div class="d-flex align-items-center justify-content-between gap-2">
+                  <div><b>{{employee?.empFollowers[0]?.followers?.length || '0'}}</b> followers</div>
+                  <div>.</div>
+                  <div><b>{{employee?.empFollowing[0]?.followings?.length || '0'}}</b> following</div>
+                </div>
+              </div>
+            </td>
+          </tr>
+          <tr class="py-2" *ngIf="employee?.empContact[0]?.contact[0]?.country">
+            <td><div class="icon">
+              <i class="material-icons">location_pin</i>
+            </div></td>
+            <td>{{employee?.empContact[0]?.contact[0]?.country || ' '}}</td>
+          </tr>
+          <tr class="py-2" *ngIf="employee?.empContact[0]?.contact[0]?.website">
+            <td><div class="icon">
+              <i class="material-icons">link</i>
+            </div></td>
+            <td><a href="{{employee?.empContact[0]?.contact[0]?.website || ' '}}">website</a></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 col-lg-7">
+      <ul class="nav justify-content-center py-3">
+        <li class="nav-item" (click)="isActive('followers')">
+          <span class="nav-link" [ngClass]="activeFollowerTab ? 'active' : ''" >Followers</span>
+        </li>
+        <li class="nav-item" (click)="isActive('following')">
+          <span class="nav-link" [ngClass]="activeFollowingTab ? 'active' : ''" >Followings</span>
+        </li>
+      </ul>
+      <app-emp-followers *ngIf="tab === 'followers'" [followers]="employee?.empFollowers[0]?.followers"></app-emp-followers>
+      <app-emp-followings *ngIf="tab === 'following'" [followings]="employee?.empFollowing[0]?.followings"></app-emp-followings>
+    </div>
+  </div>
+</div>

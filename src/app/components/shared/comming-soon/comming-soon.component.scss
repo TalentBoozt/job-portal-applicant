@@ -1,0 +1,41 @@
+@keyframes up-down {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(20px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.not-found{
+  width: 100%;
+  height: calc(100vh - 60px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  .caption{
+    font-size: max(18px ,32px);
+    font-weight: 600;
+    color: var(--color-text-300);
+  }
+  .value{
+    font-size: max(24px ,48px);
+    font-weight: 600;
+    color: var(--color-text-100);
+  }
+  .img-wrapper{
+    width: 200px;
+    height: 200px;
+    animation: up-down 2s ease-in-out infinite;
+    img{
+      width: 100%;
+      height: 100%;
+    }
+  }
+}

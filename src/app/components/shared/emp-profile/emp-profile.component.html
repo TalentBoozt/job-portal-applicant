@@ -1,0 +1,512 @@
+<div class="container my-3">
+  <div class="container">
+    <div *ngIf="loading">
+      <app-page-loading></app-page-loading>
+    </div>
+
+    <app-emp-follow-wrap
+      *ngIf="showFollowWrapper"
+      [employee]="employee"
+      [tab]="activeTab"
+      (close)="closeFollowWrapper()">
+    </app-emp-follow-wrap>
+
+    <div *ngIf="!loading && employee?.employee && !showFollowWrapper">
+      <div class="top-content">
+        <div class="cover-image">
+          <img
+            [src]="employee.employee.coverImage?employee.employee.coverImage:'./assets/imgs/shared/default_cover.webp'"
+            alt="cover">
+        </div>
+
+        <div class="profile-img">
+          <img [src]="employee.employee.image?employee.employee.image:'./assets/imgs/shared/default_emp_dp.svg'"
+               alt="profile">
+        </div>
+
+        <div class="profile-info">
+          <p class="emp-name">{{employee.employee.firstname}} {{employee.employee.lastname}} <span class="pro-tag"
+                                                                                                   *ngIf="employee?.auth?.userLevel == 3">pro</span>
+          </p>
+          <p class="position">{{employee.employee.occupation ? employee.employee.occupation : 'Not Provided'}}</p>
+        </div>
+
+        <div class="profile-btn" routerLink="/candidate-profile-setting"
+             *ngIf="employee.employee.id === cookieService.userID()">
+          <button><i class="material-icons">edit</i><span class="d-none d-sm-block"> complete profile</span></button>
+        </div>
+      </div>
+
+      <div class="following-area w-100 pt-3">
+        <p class="text-left m-0">
+          <span (click)="openFollowWrapper('following')">Following {{followingIds.length || 0}}</span>&nbsp;
+          <span (click)="openFollowWrapper('followers')">Followers {{followersIds.length || 0}}</span>&nbsp;
+        </p>
+        <p class="text-left m-0" *ngIf="employee.employee.id === cookieService.userID()">
+          <span data-bs-toggle="modal" data-bs-target="#inviteModel">Invite friends <i class="fa fa-share"
+                                                                                       aria-hidden="true"></i></span>
+        </p>
+        <p class="text-left m-0" *ngIf="employee.employee.id !== cookieService.userID()">
+          <button class="btn-1" [disabled]="!followBtn"
+                  (click)="followingIds.includes(employee.employee.id) || followersIds.includes(myId)?unfollow(employee):follow(employee)">
+            {{followingIds.includes(employee.employee.id) || followersIds.includes(myId) ? 'Unfollow' : 'Follow'}}
+          </button>
+        </p>
+      </div>
+
+      <div class="row my-3 second-content">
+        <div class="col-12 col-md-6 col-lg-8 left-side">
+          <div *ngIf="employee.employee.intro">
+            <h5>{{employee.employee.firstname}} {{employee.employee.lastname}}</h5>
+            <p *ngFor="let intro of employee.employee.intro.split('\n')">{{intro}}</p>
+          </div>
+
+          <div *ngIf="employee.empSkills.length > 0">
+            <h5>Skills :</h5>
+            <div class="row">
+              <div class="col-12 col-md-6" *ngFor="let skill of employee.empSkills[0].skills">
+                <div class="d-flex align-items-center justify-content-between w-100">
+                  <div class="caption">{{skill.skill}}</div>
+                  <div class="value">{{skill.percentage}}%</div>
+                </div>
+                <div class="progress">
+                  <div class="progress-bar" role="progressbar" style="width: 80%"
+                       [attr.aria-valuenow]="skill.percentage" [style.width]="skill.percentage+'%'" aria-valuemin="0"
+                       aria-valuemax="100"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="employee.empExperiences.length > 0">
+            <h5>Experience :</h5>
+            <div class="row experience" *ngFor="let ex of employee.empExperiences[0].experiences">
+              <div class="col-3 col-lg-2">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                  <div class="org-wrapper">
+                    <img
+                      [src]="employee.empExperiences[0].companyLogo?employee.empExperiences[0].companyLogo:'./assets/imgs/shared/default_org_logo.svg'"
+                      alt="org">
+                  </div>
+                  <div class="year">
+                    {{ex.startDate}} - {{ex.endDate}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-9 col-lg-10">
+                <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-2">
+                  <div class="title">{{ex.position}}</div>
+                  <div class="location">{{ex.company}} - {{ex.country}}</div>
+                  <div class="description">{{ex.description}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="employee.empEducation.length > 0">
+            <h5>Education :</h5>
+            <div class="row experience" *ngFor="let ed of employee.empEducation[0].education">
+              <div class="col-3 col-lg-2">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                  <div class="org-wrapper">
+                    <img
+                      [src]="employee.empEducation[0].schoolLogo?employee.empEducation[0].schoolLogo:'./assets/imgs/shared/default_school_logo.svg'"
+                      alt="school">
+                  </div>
+                  <div class="year">
+                    {{ed.startDate}} - {{ed.endDate}}
+                  </div>
+                </div>
+              </div>
+              <div class="col-9 col-lg-10">
+                <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-2">
+                  <div class="title">{{ed.degree}}</div>
+                  <div class="location">{{ed.school}} - {{ed.country}}</div>
+                  <div class="description">{{ed.description}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="employee.empProjects[0].projects.length > 0">
+            <h5>Portfolio :</h5>
+            <div class="row experience" *ngFor="let ep of employee.empProjects[0].projects">
+              <div class="col-3 col-lg-2">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                  <div class="org-wrapper">
+                    <img
+                      src="./assets/imgs/shared/default_project_logo.svg"
+                      alt="project">
+                  </div>
+                </div>
+              </div>
+              <div class="col-9 col-lg-10">
+                <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-2">
+                  <div class="title">{{ep.title}}</div>
+                  <div class="year">{{ep.startDate}} - {{ep.endDate}}</div>
+                  <div class="location">{{ep.company}} {{' - '+ep.role}}</div>
+                  <div class="description"><p>{{ep.description}}</p></div>
+                  <div class="d-flex align-items-center justify-content-start gap-3 w-100">
+                    <a *ngIf="ep.source" href="{{ep.source}}" class="m-0 p-0" style="text-decoration: none">
+                      <button class="btn-1">Source</button>
+                    </a>
+                    <a *ngIf="ep.demo" href="{{ep.demo}}" class="m-0 p-0" style="text-decoration: none">
+                      <button class="btn-1">Demo</button>
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="employee.empCertificates[0].certificates.length > 0">
+            <h5>Certificates :</h5>
+            <div class="row experience">
+              <div class="col-12 col-md-6" *ngFor="let ec of employee.empCertificates[0].certificates">
+                <div class="certificate">
+                  <div class="d-flex flex-column align-items-start justify-content-start w-100 gap-2 mb-3">
+                    <div class="organization">{{ec.organization}}</div>
+                    <div class="title">{{ec.name}}</div>
+                    <div class="date">{{ec.date}}</div>
+                  </div>
+                  <div class="d-flex flex-column align-items-end justify-content-end w-100 gap-2">
+                    <div class="view">
+                      <a href="{{ec.certificateUrl}}">view certificate</a>
+                    </div>
+                    <div class="id">{{ec.certificateId}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="container">
+            <app-year-view></app-year-view>
+          </div>
+
+          <div class="contact-form-wrapper">
+            <div class="form-card-1">
+              <h5>Contact Me:</h5>
+              <form [formGroup]="contactUsForm">
+                <div class="row form-wrapper w-100">
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label for="name">Your Name</label>
+                      <input type="text" class="form-control" id="name" placeholder="John Doe" formControlName="name">
+                    </div>
+                  </div>
+
+                  <div class="col-12 col-md-6">
+                    <div class="form-group">
+                      <label for="email">Email Address</label>
+                      <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com"
+                             formControlName="email">
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="subject">Subject</label>
+                      <input type="text" class="form-control" id="subject" placeholder="Your Question"
+                             formControlName="subject">
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <label for="comment">Comment</label>
+                      <textarea class="form-control" id="comment" rows="5" placeholder="Your Message"
+                                formControlName="message"></textarea>
+                    </div>
+                  </div>
+
+                  <div class="col-12">
+                    <div class="form-group">
+                      <button type="submit" class="btn-1" [disabled]="mailLoading"
+                              (click)="contact()">{{mailLoading ? 'Sending...' : 'Send Message'}}</button>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-12 col-md-6 col-lg-4 right-side">
+          <div class="card-1">
+            <div class="d-flex align-items-center justify-content-around">
+              <mat-progress-spinner
+                class="progress-spinner"
+                [mode]="progressMode"
+                [value]="progressValue">
+              </mat-progress-spinner>
+              <div>
+                <div class="title-1">Profile Completion</div>
+                <p class="m-0">{{progressValue}}%</p>
+              </div>
+            </div>
+          </div>
+
+          <button *ngIf="employee.employee.id === cookieService.userID()" class="resume-btn" (click)="generateCV()" title="Complete your profile to generate CV">Generate CV</button>
+
+          <div class="details-card-1">
+            <div class="d-flex align-items-center justify-content-between w-100">
+              <h5>Contact Detail:</h5>
+              <div class="form-check form-switch form-check-reverse"
+                   *ngIf="employee.employee.id === cookieService.userID()">
+                <label class="form-check-label" for="private">Public</label>
+                <input class="form-check-input" type="checkbox" role="switch" id="private" [checked]="contactPrivate"
+                       (click)="toggleContactPrivate()">
+              </div>
+            </div>
+            <div *ngIf="employee?.empContact?.length <= 0 || employee?.empContact[0]?.publicity == false" class="w-100">
+              <p>Details Not Provided or User Made Private</p>
+            </div>
+            <div *ngIf="employee?.empContact?.length > 0 && employee?.empContact[0]?.publicity == true" class="w-100">
+              <div *ngFor="let pd of employee?.empContact" class="w-100">
+                <div class="w-100" *ngIf="pd.contact.length > 0">
+                  <div *ngFor="let c of pd.contact" class="d-flex flex-column w-100" style="gap: 12px;">
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">mail_outline</i><span>Email:</span></div>
+                      <div class="value">{{c.email ? c.email : 'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">child_friendly</i><span>DOB:</span></div>
+                      <div class="value">{{employee?.employee.dob ? employee?.employee.dob : 'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">home</i><span>Address:</span></div>
+                      <div class="value">{{c.address ? c.address : 'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">location_on</i><span>City:</span></div>
+                      <div class="value">{{c.city ? c.city : 'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">south_america</i><span>Country:</span></div>
+                      <div class="value">{{c.country ? c.country : 'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">dns</i><span>Postal Code:</span></div>
+                      <div class="value">{{c.zipCode ? c.zipCode : 'N/A'}}</div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between w-100">
+                      <div class="caption"><i class="material-icons">local_phone</i><span>Mobile:</span></div>
+                      <div class="value">{{c.phone ? c.phone : 'N/A'}}</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="w-100" *ngIf="pd?.socialLinks?.length > 0">
+                  <div *ngIf="pd.socialLinks.length > 0" class="my-4">
+                    <div *ngFor="let s of pd.socialLinks">
+                      <div class="d-flex align-items-center justify-content-between w-100">
+                        <div class="caption">Social:</div>
+                        <div class="item-set">
+                          <div class="social-item" *ngIf="s.linkedin">
+                            <a href="{{s.linkedin}}"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.facebook">
+                            <a href="{{s.facebook}}"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.instagram">
+                            <a href="{{s.instagram}}"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.twitter">
+                            <a href="{{s.twitter}}"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="s.github">
+                            <a href="{{s.github}}"><i class="fa fa-github" aria-hidden="true"></i></a>
+                          </div>
+                          <div class="social-item" *ngIf="pd.contact[0].email">
+                            <a href="mailto:{{pd.contact[0].email}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="sub-card" *ngIf="employee?.employee?.resume">
+                  <div class="d-flex align-items-center justify-content-start w-100">
+                    <i class="fa fa-file-text-o" aria-hidden="true"></i>
+                    <p>{{employee?.employee.firstname}}-resume.pdf</p>
+                  </div>
+                  <a href="{{employee?.employee.resume}}" download="{{employee?.employee.resume}}" class="w-100">
+                    <button class="btn-1">
+                      <i class="fa fa-download" aria-hidden="true"></i>
+                      Download CV
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-4">
+        <div class="col-12 col-sm-6 col-lg-3" *ngFor="let re of filteredEmployeesList() | truncateComments:4">
+          <div class="employee-card">
+            <div class="d-flex align-items-center justify-content-between w-100">
+            <span class="top-rated" *ngIf="re.companyId != null">
+              <i class="material-icons">star_border</i>
+            </span>
+              <span class="favorite" [ngClass]="followingIds.includes(re.id) || followersIds.includes(myId) ? 'active' : ''">
+              <i class="material-icons">favorite</i>
+            </span>
+            </div>
+
+            <div class="profile-wrapper">
+              <img [src]="re?.image ? re?.image : './assets/imgs/shared/default_emp_dp.svg'" alt="profile"
+                   class="profile-img">
+            </div>
+
+            <div class="name">{{re?.firstname ? re?.firstname + ' ' + re?.lastname : 'N/A'}}</div>
+            <div class="title">{{re.occupation ? re.occupation : 'N/A'}}</div>
+
+            <div class="keywords">
+              <div class="d-flex align-items-center justify-content-around w-100 gap-1">
+                <div class="key" *ngFor="let k of re?.keywords?.split(',')">{{k}}</div>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-around w-100">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="caption">Salary:</div>
+                <div class="value">{{re?.expectedSalaryRange ? re?.expectedSalaryRange : 'N/A'}}</div>
+              </div>
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="caption">Experience:</div>
+                <div class="value">{{re?.currentExperience ? re?.currentExperience : 'N/A'}}</div>
+              </div>
+            </div>
+
+            <button class="btn-1" (click)="viewProfile(re?.id)">Profile</button>
+          </div>
+        </div>
+      </div>
+
+      <app-job-ad-card1></app-job-ad-card1>
+    </div>
+    <div *ngIf="!loading && serverError">
+      <app-failed-to-load-data></app-failed-to-load-data>
+    </div>
+    <div *ngIf="notFound && !employee?.employee">
+      <app-result-not-found></app-result-not-found>
+    </div>
+    <div *ngIf="corsError">
+      <app-network-error></app-network-error>
+    </div>
+    <div *ngIf="forbidden && !employee?.employee || unexpectedError">
+      <app-forbidden></app-forbidden>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="inviteModel" tabindex="-1" aria-labelledby="inviteModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="inviteModalLabel">Invite Friends</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Refer friends to seek a job today. They will success their job journey in here ❤</p>
+        <div class="d-flex align-items-center justify-content-between w-100 gap-2">
+          <input type="text" id="invite" placeholder="https://talentboozt.com" class="form-control"
+                 [(ngModel)]="inviteLink" readonly>
+          <div class="tooltip1">
+            <button class="btn-1" (click)="inviteFriend()" (mouseout)="outFunc()">
+              <span class="tooltiptext" id="myTooltip">Copy to clipboard</span>
+              Copy Link
+            </button>
+          </div>
+        </div>
+        <p class="my-3" style="font-weight: 500; font-size: 14px">Or Invite Via</p>
+        <div class="invite-options">
+          <div class="d-flex align-items-center justify-content-end w-100 gap-3">
+            <div class="twitter">
+              <a href="https://twitter.com/intent/tweet?url={{inviteLink}}" target="_blank">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M13.482 10.622L20.04 3h-1.554l-5.693 6.618L8.245 3H3l6.876 10.007L3 21h1.554l6.012-6.989L15.368 21h5.245l-7.131-10.378zm-2.128 2.474l-.697-.997-5.543-7.93H7.5l4.474 6.4.697.996 5.815 8.319h-2.387l-4.745-6.788z"></path>
+                </svg>
+              </a>
+              <span>Twitter</span>
+            </div>
+            <div class="whatsapp">
+              <a href="https://wa.me/?text={{inviteLink}}" target="_blank">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M2.081 11.717a9.7 9.7 0 001.298 4.857L2 21.61l5.152-1.351a9.71 9.71 0 004.27 1.175l.378.007c5.356 0 9.717-4.359 9.72-9.715a9.657 9.657 0 00-2.845-6.874 9.658 9.658 0 00-6.875-2.85c-5.357 0-9.716 4.36-9.719 9.716zm9.722-8.074c2.158 0 4.186.842 5.711 2.368a8.026 8.026 0 012.364 5.713c-.002 4.37-3.493 7.94-7.831 8.072l-.25.003c-1.45 0-2.871-.39-4.111-1.125l-.295-.175-3.058.801.817-2.98-.193-.305a8.053 8.053 0 01-1.235-4.297c.002-4.453 3.626-8.075 8.081-8.075zM8.36 7.23a.892.892 0 00-.648.304l-.16.175c-.276.31-.69.88-.69 1.85 0 .93.527 1.834.818 2.267l.217.307c.29.43 1.801 2.694 4.105 3.603l.445.17c1.67.615 2.058.475 2.469.437.445-.04 1.437-.587 1.639-1.154.202-.567.202-1.053.142-1.154a.415.415 0 00-.165-.135l-1.056-.52a17.562 17.562 0 00-.904-.419c-.223-.08-.385-.121-.547.122-.162.243-.627.79-.768.952-.124.142-.248.175-.44.1l-.46-.206a6.224 6.224 0 01-1.58-1.039c-.721-.643-1.209-1.438-1.35-1.681-.142-.243-.016-.375.106-.496.11-.109.243-.283.365-.425.12-.142.161-.243.242-.405a.42.42 0 00.008-.363l-.109-.25c-.158-.385-.495-1.23-.668-1.615-.181-.404-.373-.412-.546-.42-.142-.005-.304-.005-.465-.005z"></path>
+                </svg>
+              </a>
+              <span>Whatsapp</span>
+            </div>
+            <div class="facebook">
+              <a href="https://www.facebook.com/sharer/sharer.php?u={{inviteLink}}" target="_blank">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M14.863 2c-2.933 0-4.828 1.932-4.828 4.922v2.27H7.41a.41.41 0 00-.41.407v3.289a.41.41 0 00.41.407h2.625v8.297c0 .226.184.408.41.408h3.425a.41.41 0 00.41-.408v-8.297h3.069c.227 0 .41-.182.41-.407l.002-3.289a.407.407 0 00-.411-.408h-3.07V7.268c0-.925.222-1.394 1.434-1.394l1.759-.001a.41.41 0 00.41-.408V2.412a.41.41 0 00-.41-.408z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </a>
+              <span>Facebook</span>
+            </div>
+            <div class="reddit">
+              <a href="https://www.reddit.com/submit?url={{inviteLink}}" target="_blank">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M22 12.156a2.198 2.198 0 00-2.197-2.197 2.11 2.11 0 00-1.511.615c-1.494-1.072-3.568-1.775-5.853-1.863l1.002-4.692 3.251.685a1.566 1.566 0 003.129-.07c0-.861-.703-1.564-1.564-1.564a1.52 1.52 0 00-1.389.879l-3.638-.774a.438.438 0 00-.299.053.428.428 0 00-.175.246l-1.107 5.237c-2.338.07-4.43.756-5.94 1.863a2.217 2.217 0 00-1.512-.615A2.198 2.198 0 002 12.156c0 .896.527 1.652 1.3 2.004-.035.21-.052.439-.052.667 0 3.375 3.919 6.099 8.77 6.099 4.85 0 8.77-2.724 8.77-6.099 0-.228-.018-.439-.053-.65A2.274 2.274 0 0022 12.157zM6.974 13.72c0-.86.703-1.564 1.564-1.564.86 0 1.564.703 1.564 1.564 0 .861-.703 1.564-1.564 1.564a1.568 1.568 0 01-1.564-1.564zm8.734 4.13c-1.072 1.072-3.11 1.143-3.708 1.143-.598 0-2.654-.088-3.708-1.143a.414.414 0 010-.58.414.414 0 01.58 0c.668.668 2.109.914 3.146.914 1.036 0 2.46-.246 3.145-.914a.414.414 0 01.58 0 .452.452 0 01-.035.58zm-.28-2.566a1.568 1.568 0 01-1.565-1.564c0-.86.703-1.564 1.564-1.564.861 0 1.564.703 1.564 1.564 0 .861-.703 1.564-1.564 1.564z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </a>
+              <span>Reddit</span>
+            </div>
+          </div>
+          <div class="d-flex align-items-center justify-content-start w-100 gap-3">
+            <div class="linkedin">
+              <a href="https://www.linkedin.com/sharing/share-offsite/?url={{inviteLink}}" target="_blank">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M7.035 21H3.367V9.671h3.668V21zM5.2 7.531C3.978 7.531 3 6.524 3 5.266 3 4.007 3.978 3 5.2 3c1.223 0 2.201 1.007 2.201 2.266 0 1.258-.978 2.265-2.2 2.265zM20.483 21h-3.667v-6.671c0-1.007-.856-1.888-1.834-1.888-.978 0-1.834.88-1.834 1.888V21H9.48V9.671h3.668v1.51c.611-1.006 1.956-1.761 3.056-1.761 2.323 0 4.28 2.014 4.28 4.405V21z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </a>
+              <span>LinkedIn</span>
+            </div>
+            <div class="telegram">
+              <a href="https://t.me/share/url?url={{inviteLink}}" target="_blank">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M20.765 4.02l-.14.007c-.512.044-1.303.293-3.517 1.182L13.41 6.732c-1.916.805-5.334 2.28-10.255 4.423-.872.347-1.329.686-1.37 1.018-.055.44.367.671 1.015.896l.975.314c.94.305 2.205.663 2.863.677.596.013 1.262-.233 1.997-.738l6.61-4.418c.712-.464 1.098-.703 1.158-.716.115-.026.274-.059.381.037.108.096.097.277.086.326-.091.388-4.803 4.674-5.075 4.956l-.26.26c-.951.93-1.803 1.575-.136 2.673l1.078.72c.665.448 1.25.852 1.927 1.307l1.105.734c1.035.679 1.848 1.484 2.917 1.385.492-.045 1-.508 1.259-1.888l.309-1.697c.64-3.59 1.542-9.068 1.777-11.543a3.248 3.248 0 00-.03-.725c-.025-.143-.076-.347-.263-.499-.22-.179-.561-.216-.713-.214z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </a>
+              <span>Telegram</span>
+            </div>
+            <div class="email">
+              <a href="mailto:?subject=Check this out&body={{inviteLink}}">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                     class="w-8 h-8 pointer-events-none">
+                  <path
+                    d="M16.667 4.5a4.833 4.833 0 014.828 4.618l.005.215v5.33a4.833 4.833 0 01-4.618 4.829l-.215.005H8.333a4.833 4.833 0 01-4.828-4.618l-.005-.216v-5.33a4.833 4.833 0 014.618-4.828l.215-.005h8.334zm0 1.5H8.333a3.333 3.333 0 00-3.328 3.15L5 9.333v5.33a3.333 3.333 0 003.15 3.329l.183.005h8.334a3.333 3.333 0 003.328-3.15l.005-.184v-5.33a3.333 3.333 0 00-3.15-3.328L16.667 6zm1.68 3.396c.269.42.175 1-.21 1.294l-5.03 3.846a1 1 0 01-1.215 0l-5.03-3.846c-.384-.294-.478-.874-.208-1.294.27-.42.8-.522 1.185-.228l4.66 3.564 4.662-3.564c.385-.294.916-.192 1.185.228z"
+                    fill-rule="evenodd"></path>
+                </svg>
+              </a>
+              <span>Email</span>
+            </div>
+          </div>
+        </div>
+        <p class="my-2"><span>We are much appreciated your support :)</span></p>
+      </div>
+    </div>
+  </div>
+</div>
