@@ -1,0 +1,59 @@
+<button class="btn-2" (click)="drawer.toggle()">
+  <mat-icon>{{drawer.opened ? 'arrow_back_ios' : 'arrow_forward_ios'}}</mat-icon>
+</button>
+
+<div class="w-100">
+  <mat-drawer-container class="drawer-container">
+    <mat-drawer #drawer mode="over" class="drawer">
+      <div class="accordion">
+        <mat-accordion *ngFor="let pd of interviewPrepData">
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title>
+                {{ pd.category }}
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+
+            <ul>
+              <li *ngFor="let question of pd.questions" (click)="selectQuestion(question)">
+                {{ question.question }}
+              </li>
+            </ul>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+
+      <div class="footer-tag">
+        Powered By: TALENT BOOZT
+      </div>
+    </mat-drawer>
+
+    <mat-drawer-content>
+      <div class="container">
+        <ng-container *ngIf="selectedQuestion">
+          <div class="card-1 p-0 overflow-hidden">
+            <div class="top">
+              <h3>{{ selectedQuestion.question }}</h3>
+              <p>{{ selectedQuestion.viewCount }} people viewed this question</p>
+            </div>
+            <div class="bottom">
+              <p>{{ selectedQuestion.overview }}</p>
+            </div>
+          </div>
+
+          <div class="card-1" *ngFor="let answer of selectedQuestion.answers; let i = index">
+            <div class="d-flex align-items-center justify-content-between">
+              <div class="title-1">Sample Answer {{i + 1}}</div>
+              <button class="view-btn" [routerLink]="['/interview-prep-answer', selectedQuestion.id, answer.id]">View</button>
+            </div>
+            <p>By {{ answer.by +', '}} {{ answer.position }}</p>
+            <div class="views-tag">
+              {{ answer.viewCount }} {{ answer.viewCount === 1 ? 'view' : 'views' }} {{answer.video ? ' • video included' : ''}}
+            </div>
+            <p class="m-2">{{ answer.answer | truncate: 200}}</p>
+          </div>
+        </ng-container>
+      </div>
+    </mat-drawer-content>
+  </mat-drawer-container>
+</div>

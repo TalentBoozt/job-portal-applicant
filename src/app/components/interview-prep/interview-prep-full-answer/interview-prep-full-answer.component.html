@@ -1,0 +1,33 @@
+<div class="container">
+  <div *ngIf="selectedAnswer && selectedQuestion">
+    <div class="card-1 p-0 overflow-hidden">
+      <div class="top">
+        <div class="d-flex align-items-center">
+          <button class="btn-2" (click)="goBack()"><i class="material-icons">arrow_back_ios</i></button>
+          <div>
+            <h3>{{ selectedQuestion.question }}</h3>
+            <p>By {{ selectedAnswer.by +', '}} {{ selectedAnswer.position }}</p>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <p>{{ selectedQuestion.overview }}</p>
+      </div>
+    </div>
+
+    <div class="card-1">
+      <div class="video-wrapper" *ngIf="selectedAnswer.video">
+        <iframe width="560" height="315"
+                [src]="getVideoUrl(selectedAnswer.video)"
+                frameborder="0"
+                allowfullscreen>
+        </iframe>
+      </div>
+      <p>{{ selectedAnswer.answer }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="!selectedAnswer || !selectedQuestion">
+    <app-not-found></app-not-found>
+  </div>
+</div>
