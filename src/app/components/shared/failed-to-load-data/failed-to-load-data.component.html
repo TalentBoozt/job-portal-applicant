@@ -1,0 +1,10 @@
+<div class="failed-wrapper" *ngIf="isVisible">
+  <div class="py-3 px-2 px-md-4 px-lg-6">
+    <div class="img-wrapper">
+      <img src="./assets/imgs/shared/server-error.svg" alt="server error">
+    </div>
+  </div>
+  <h4>Server Error Occurred.</h4>
+  <p>Please try again later.</p>
+  <button class="btn-2 mb-2" routerLink="/job">Search for Jobs</button>
+</div>

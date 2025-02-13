@@ -1,0 +1,56 @@
+.notification-form-container {
+  max-width: 500px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+
+  h2{
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #111;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+  }
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.btn {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.error {
+  color: red;
+  font-size: 12px;
+}
+
+.delete, .change-visibility {
+  cursor: pointer;
+  padding: 5px 10px;
+  border: none;
+  outline: none;
+  border-radius: 8px;
+  color: #FFFFFF;
+}
+
+.delete{
+  background-color: red;
+}
+
+.change-visibility{
+  background-color: green;
+}

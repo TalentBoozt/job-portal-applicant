@@ -1,0 +1,155 @@
+.footer{
+  background-color: #222b38;
+
+  .footer-top{
+    padding: 40px 0;
+    background-color: #222b38;
+
+    h2{
+      color: #fff;
+      margin-bottom: 20px;
+      font-size: 16px;
+    }
+
+    p{
+      cursor: pointer;
+      transition: all 0.3s ease;
+
+      a{
+        text-decoration: none;
+        color: var(--color-text-400);
+      }
+
+      &:hover{
+        color: #fff;
+        transform: translateX(5px);
+      }
+
+      &.not-animate{
+        transition: none;
+        transform: none;
+        color: var(--color-text-400);
+      }
+    }
+
+    .input-group{
+      input{
+        background-color: transparent;
+        border: 1px solid var(--color-text-400);
+        color: #fff;
+        padding: 12px 16px;
+
+        &:focus{
+          outline: none;
+          box-shadow: none;
+        }
+
+        &::placeholder{
+          color: var(--color-text-400);
+        }
+      }
+    }
+
+    .btn-outline-secondary{
+      background-color: #1e8449;
+      border: 1px solid #1e8449;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+    }
+
+    .logo-lg{
+      width: 90%;
+      max-width: 250px;
+      aspect-ratio: 16/9;
+      margin-bottom: 16px;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-image: url("../../../../assets/imgs/logo/footer-w.webp");
+    }
+
+    .report-issue{
+      width: 100%;
+      margin: 14px 0;
+      background-color: #1f1f2e;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 12px 20px;
+
+      .report-btn{
+        background-color: #FFB100;
+        color: #fff;
+        margin: 0 0 8px 0;
+        border-radius: 8px;
+        border: none;
+        outline: none;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        cursor: pointer;
+        gap: 4px;
+        font-size: 12px;
+
+        i{
+          font-size: 14px;
+        }
+
+        &:hover{
+          background-color: #FFD700;
+        }
+      }
+    }
+
+    .flag{
+      width: 22px;
+
+      img{
+        width: 100%;
+      }
+    }
+  }
+
+  .footer-bottom{
+    background-color: #12171e;
+    min-height: 40px;
+    padding: 16px;
+
+    p{
+      margin: 0;
+    }
+  }
+}
+
+.modal-body{
+  p, ol, ul, li{
+    font-size: 14px;
+  }
+}
+
+.form-wrapper{
+  gap: unset;
+  row-gap: 20px;
+  font-size: 14px;
+
+  input, textarea{
+    font-size: 14px;
+
+    &::placeholder{
+      font-size: 14px;
+    }
+  }
+
+  span{
+    color: var(--color-text-200);
+    font-weight: 450;
+  }
+}

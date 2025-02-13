@@ -1,0 +1,88 @@
+.navigation-content{
+  min-height: 200px;
+  padding: 2vw;
+
+  li{
+    list-style: none;
+    transition: background-color .3s ease;
+    text-decoration: underline;
+    font-weight: 500;
+    color: var(--color-text-300);
+
+    span{
+      &:hover{
+        cursor: pointer;
+        color: #fff;
+        background-color: var(--color-primary-200);
+      }
+    }
+
+    ._1ovgwpu0{
+      fill: var(--color-text-300);
+    }
+
+    &:hover{
+      text-decoration: none;
+    }
+  }
+  @keyframes clickHere {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  .here{
+    text-decoration: none;
+    text-transform: uppercase;
+    font-weight: bolder;
+    margin: 8px 0;
+    padding: 0;
+    animation: clickHere 1s infinite;
+  }
+  .not-link{
+    text-decoration: none;
+    span{
+      &:hover{
+        cursor: default;
+        background-color: transparent;
+        color: var(--color-text-100);
+      }
+    }
+  }
+  .active-link{
+    span{
+      color: #fdfdfd;
+      background-color: var(--color-primary-200);
+      text-decoration: none;
+      &:hover{
+        cursor: default;
+        background-color: var(--color-primary-100);
+        color: #fff;
+      }
+    }
+  }
+}
+
+@keyframes cursorEndPoint {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+.cursor-end-point{
+  cursor: none;
+  height: 15px;
+  width: 2px;
+  background-color: #f9f9f9;
+  animation: cursorEndPoint 1s infinite;
+}

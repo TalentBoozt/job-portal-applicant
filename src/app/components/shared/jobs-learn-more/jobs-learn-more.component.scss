@@ -1,0 +1,21 @@
+.card-1{
+  background-color: var(--color-surface-100);
+  max-width: 1000px;
+  padding: max(20px, 3vw) max(30px, 5vw);
+  margin: auto auto max(30px, 3vw);
+
+  ul{
+    li{
+      color: var(--color-text-300);
+
+      strong{
+        font-weight: 500;
+        color: var(--color-text-200);
+      }
+    }
+  }
+
+  .title-1{
+    margin-bottom: 12px;
+  }
+}

@@ -1,0 +1,74 @@
+<form [formGroup]="interviewForm" (ngSubmit)="onSubmit()" class="form-container">
+  <!-- Category Section -->
+  <div class="form-group">
+    <label class="category-title">Category:</label>
+    <input formControlName="category" required class="form-control">
+  </div>
+
+  <!-- Questions Array -->
+  <div formArrayName="questions">
+    <div *ngFor="let question of questions.controls; let i = index" [formGroupName]="i" class="question-block">
+      <h3 class="question-title">Question {{ i + 1 }}</h3>
+
+      <div class="form-group">
+        <label>Question ID:</label>
+        <input formControlName="id" class="form-control" placeholder="<category-name>-q-1">
+      </div>
+
+      <div class="form-group">
+        <label>Question:</label>
+        <input formControlName="question" required class="form-control">
+      </div>
+
+      <div class="form-group">
+        <label>Overview:</label>
+        <textarea formControlName="overview" class="overview form-control"></textarea>
+      </div>
+
+      <!-- Answers Array -->
+      <div formArrayName="answers">
+        <h4 class="answers-title">Answers:</h4>
+
+        <div *ngIf="question.get('answers')" class="answer-list">
+          <div *ngFor="let answer of getAnswersFormArray(i).controls; let j = index" [formGroupName]="j" class="answer-block">
+            <div class="form-group">
+              <label>Answer by:</label>
+              <input formControlName="by" required class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Position:</label>
+              <input formControlName="position" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Date:</label>
+              <input type="date" formControlName="date" class="form-control">
+            </div>
+
+            <div class="form-group">
+              <label>Answer:</label>
+              <textarea formControlName="answer" required class="answer-textarea form-control"></textarea>
+            </div>
+
+            <div class="form-group">
+              <label>Video:</label>
+              <input formControlName="video" class="form-control">
+            </div>
+
+            <button type="button" (click)="removeAnswer(i, j)" class="remove-button">Remove Answer</button>
+          </div>
+        </div>
+
+        <button type="button" (click)="addAnswer(i)" class="add-button">Add New Answer</button>
+      </div>
+
+      <button type="button" (click)="removeQuestion(i)" class="remove-button">Remove Question</button>
+    </div>
+  </div>
+
+  <!-- Add Question and Submit Buttons -->
+  <button type="button" (click)="addQuestion()" class="add-button me-2">Add Question</button>
+  <button type="submit" class="save-button">Submit</button>
+</form>
+

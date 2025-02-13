@@ -1,0 +1,234 @@
+<div class="footer">
+  <div class="container">
+    <div class="row footer-top">
+      <div class="col-12 col-md-4 col-lg-3">
+        <div class="logo-lg"></div>
+        <p class="not-animate">We are committed to uplifting Human Talent <br>
+          <span class="d-flex align-items-center">
+            <span class="flag">
+              <img src="{{utilities.countryFlag2}}" alt="finland">
+            </span>
+            &nbsp;{{utilities.contactNumber2}}
+          </span>
+          <span class="d-flex align-items-center">
+            <span class="flag"><img src="{{utilities.countryFlag}}" alt="sri lanka"></span>
+            &nbsp;{{utilities.contactNumber}}
+          </span>
+          {{utilities.contactEmail}}
+        </p>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <h2>Navigation</h2>
+        <p routerLink="/about">> About Us</p>
+        <p routerLink="/job">> Jobs</p>
+        <p routerLink="/companies">> Companies</p>
+<!--        <p routerLink="/employees">> Employees</p>-->
+        <p routerLink="/terms-and-conditions">> Terms &amp; Conditions</p>
+        <p routerLink="/faq">> FAQs</p>
+        <p routerLink="/contact">> Contact Us</p>
+      </div>
+      <div class="col-6 col-md-4 col-lg-2">
+        <h2>Follow Us</h2>
+        <p><a href="{{utilities.facebook}}">> Facebook</a></p>
+        <p><a href="{{utilities.twitter}}">> Twitter</a></p>
+        <p><a href="{{utilities.linkedin}}">> LinkedIn</a></p>
+        <p><a href="{{utilities.youtube}}">> Youtube</a></p>
+        <p><a href="{{utilities.instagram}}">> Instagram</a></p>
+      </div>
+      <div class="col-12 col-lg-5">
+        <h2>Still need help?</h2>
+        <p class="not-animate">If you still have a question for us , provide your email address. We will reach to
+          you</p>
+        <form [formGroup]="requestInfoForm">
+          <div class="input-group" style="z-index: 1">
+            <input type="email" class="form-control" placeholder="Enter your valid email" formControlName="email">
+            <button class="btn btn-outline-secondary" type="button" (click)="contactMe()"><i class="material-icons">near_me</i>
+            </button>
+          </div>
+        </form>
+
+        <div class="report-issue">
+          <p class="not-animate">If you are facing any issue, please let us know</p>
+          <button class="report-btn" data-bs-toggle="modal" data-bs-target="#issueModel"><i class="material-icons"
+                                                                                            translate="no">bug_report</i>Report
+            An Issue
+          </button>
+          <button id="openForm" class="d-none" data-bs-toggle="modal" data-bs-target="#issueReportModel" #openForm>
+            btn
+          </button>
+          <button id="openForm2" class="d-none" data-bs-toggle="modal" data-bs-target="#featureReportModel" #openForm2>
+            btn
+          </button>
+        </div>
+        <p routerLink="/sitemap">> Sitemap</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="d-md-flex align-items-center justify-content-between footer-bottom">
+    <div class="footer-bottom-left">
+      <p>© 2024-{{thisYear}}. All rights reserved</p>
+    </div>
+    <div class="footer-bottom-right">
+      <p class="not-animate d-flex align-items-center m-0 pe-5">Designed by Talent Boozt Systems with <i
+        class="material-icons ms-1" style="color: #c0392b; cursor: pointer;"
+        routerLink="/we-built-with">favorite</i></p>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="issueModel" tabindex="-1" aria-labelledby="issueModelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div style="max-height: calc(100vh - 200px)" class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="issueModelLabel">Want to report an issue?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p>Here is some Troubleshooting Advice for various scenarios:</p>
+        <ol>
+          <li>Account details are incorrect</li>
+          <ul>
+            <li>Try to login with correct credentials.</li>
+            <li>Reload the page. If problem persists, contact us.</li>
+            <li>This error can be happen when you using multiple accounts with same device.</li>
+          </ul>
+          <li>Saved job details not visible</li>
+          <ul>
+            <li>This error can happen when you are not logged in correctly.</li>
+            <li>The company/job post might inactive or deleted/closed.</li>
+          </ul>
+          <li>Failed to apply a job</li>
+          <ul>
+            <li>Check you're logged as a candidate.</li>
+            <li>If the problem is still persists, contact us.</li>
+          </ul>
+          <li>Failed to post a job</li>
+          <ul>
+            <li>Check you're logged as an employer.</li>
+            <li>Ensure required information provided in organization profile.</li>
+            <li>Check your job posting limit exceeded. (you can post new jobs after removing expired jobs)</li>
+            <li>If the problem is still persists, contact us.</li>
+          </ul>
+          <li>Failed to upload multimedia files (images, videos, documents, CVs)</li>
+          <ul>
+            <li>Make sure files are not reached the limit.</li>
+            <li>We allow *.jpeg, *.jpg, *.png, *.pdf file formats only.(some cases allows *.gif, *.doc, *.docx)</li>
+          </ul>
+          <li>File uploaded. But not updated the content</li>
+          <ul>
+            <li>Reload page. Sometimes cache persists and failed to update without reloading.</li>
+            <li>Re-upload the file. When you are tring to upload a new file, sometimes first attempt create a specific
+              path for only you. So try again once:)
+            </li>
+            <li>If the problem is still persists, contact us.</li>
+          </ul>
+        </ol>
+        <p><strong style="cursor: pointer" (click)="closeAndOPenReportForm('openForm')">Click
+          here</strong> if you still have something to report/suggest. Or you can request us to add new features <strong
+          style="cursor: pointer" (click)="closeAndOPenReportForm('openForm2')">From here</strong></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #model1Close>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="issueReportModel" tabindex="-1" aria-labelledby="issueReportModelLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="issueReportModelLabel">Want to report an issue?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Examples of Software related issues : </strong>related to CVs, Images, UI related etc.</p>
+        <p><strong>Examples of Content related issues : </strong>related to Content not match, Incorrect content,
+          Content not visible etc..</p>
+        <form [formGroup]="reportIssueForm" class="w-100">
+          <div class="row form-wrapper">
+            <div class="col-12 col-md-8">
+              <div class="form-group">
+                <label for="issue_type">Issue Type *</label>
+                <select class="form-control" id="issue_type" formControlName="issueType">
+                  <option selected>Software Related Issue</option>
+                  <option>Content Related Issue</option>
+                  <option>Other Issue</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="description">Describe the issue *</label>
+                <textarea class="form-control" id="description" rows="5" placeholder="Describe your issue here"
+                          formControlName="description"></textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="attachment">Attach Screenshot *</label>
+                <input type="file" class="form-control" id="attachment"
+                       (change)="uploadFile($event, 'portal/report_issues/' + generateRandomId('issue_id'), 'issues')"/>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-1 me-2" (click)="reportIssue()">Send</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #modelClose>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" id="featureReportModel" tabindex="-1" aria-labelledby="featureReportModelLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="featureReportModelLabel">Want to report a feature?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p><strong>Examples of Feature Requests : </strong>Advanced Search Filters, Profile Customization Options, Job
+          Posting Insights, Applicant Tracking Tools etc...</p>
+        <p><strong>Examples of Feature Improvements : </strong>Streamline Dashboard Design, Enhanced Profile Visibility,
+          Refined Search Algorithms, Simplified Subscription Process etc...</p>
+        <form [formGroup]="reportFeatureForm" class="w-100">
+          <div class="row form-wrapper">
+            <div class="col-12 col-md-8">
+              <div class="form-group">
+                <label for="feature_type">Feature Type *</label>
+                <select class="form-control" id="feature_type" formControlName="featureType">
+                  <option selected>Feature Request</option>
+                  <option>Feature Improvement</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="fdescription">Describe the feature *</label>
+                <textarea class="form-control" id="fdescription" rows="5" placeholder="Describe your feature here"
+                          formControlName="description"></textarea>
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="fattachment">Attach Reference *</label>
+                <input type="file" class="form-control" id="fattachment"
+                       (change)="uploadFile($event, 'portal/report_feature/' + generateRandomId('feature_id'), 'features')"/>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn-1 me-2" (click)="reportFeature()">Send</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" #model2Close>Close</button>
+      </div>
+    </div>
+  </div>
+</div>
