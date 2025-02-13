@@ -1,0 +1,24 @@
+<div *ngFor="let f of followings">
+  <div class="d-flex align-items-center justify-content-between w-100 py-2">
+    <div class="profile-wrapper">
+      <a href="/candidate-profile?id={{f.followingId}}">
+        <img [src]="f.followingImage || './assets/imgs/shared/default_emp_dp.svg'" alt="profile" loading="lazy">
+      </a>
+    </div>
+    <div class="d-flex flex-column align-items-start justify-content-center w-100 gap-1">
+      <div class="name-tag"><a href="/candidate-profile?id={{f.followingId}}">{{f.followingName || 'N/A'}}</a></div>
+      <div class="career-tag">{{(f.followingOccupation | truncate : 30) || ' '}}</div>
+      <div class="location-tag">{{f.followingLocation || ' '}}</div>
+    </div>
+    <div class="button-wrapper">
+      <button *ngIf="f.followingId != myId" class="follow-btn" [disabled]="!followBtn"
+              (click)="followingsIds.includes(f.followingId) ? unfollow(f) : follow(f)">
+        {{followingsIds.includes(f.followingId) ? 'Unfollow' : 'Follow'}}</button>
+    </div>
+  </div>
+  <hr>
+</div>
+
+<div class="py-4 px-2" *ngIf="followings?.length == 0 || !followings">
+  <p>No one is following this user yet</p>
+</div>

@@ -1,0 +1,48 @@
+<div class="card-1">
+  <div class="card-top">
+    <div class="d-flex align-items-center justify-content-between w-100">
+      <div class="logo-icon-wrapper">
+        <div class="logo-icon">
+          <img
+            src="{{p?.companyLogo ? p?.companyLogo : './assets/imgs/shared/default_org_logo.svg'}}"
+            alt="{{p?.companyName ? p?.companyName : 'N/A'}}">
+        </div>
+      </div>
+      <div class="card-top-right">
+        <div class="visit-link-circle-card-1" (click)="(userSavedIds && userSavedIds.includes(p.id)) ? removeFav(p.id) :saveFav(p.id)">
+          <i class="material-icons" [ngClass]="(userSavedIds && userSavedIds.includes(p.id)) ? 'liked' : ''">{{userSavedIds && userSavedIds.includes(p.id) ? 'favorite' : 'favorite_border'}}</i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card-content">
+    <div class="job-title" routerLink="/job-details/{{p.id}}">{{p?.title ? p?.title : 'N/A'}}</div>
+    <div class="location">
+      <i class="fa fa-map-marker" aria-hidden="true"></i>
+      <span>{{p?.location ? p?.location : 'N/A'}}</span>
+    </div>
+    <div class="company-name">
+      <div class="companyName">{{p?.companyName ? p?.companyName : 'N/A'}}</div>&nbsp;
+      <div class="verified" *ngIf="p?.companyLevel == '3' || p?.companyLevel == '4'">
+        <i class="material-icons">verified</i>
+      </div>
+      <div class="opens-ago" *ngIf="p?.datePosted">&nbsp;•&nbsp;{{p?.datePosted | timeAgo}}</div>
+    </div>
+    <div class="d-flex align-items-center justify-content-start gap-2">
+      <div class="tag" *ngIf="p?.employeeType">
+        <span>{{p?.employeeType ? p?.employeeType : 'N/A'}}</span>
+      </div>
+      <div class="tag" *ngIf="p?.category">
+        <span>{{p?.category ? p?.category : 'N/A'}}</span>
+      </div>
+    </div>
+    <div class="salary-range"><i class="fa fa-usd" aria-hidden="true"></i> ${{p?.minSalary ? p?.minSalary : 'N/A'}} - ${{p?.maxSalary ? p?.maxSalary : 'N/A'}}</div>
+  </div>
+
+  <div class="card-bottom">
+    <div class="d-flex align-items-center justify-content-end w-100">
+      <button class="apply-btn" routerLink="/job-details/{{p.id}}">Apply Now</button>
+    </div>
+  </div>
+</div>

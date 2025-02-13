@@ -1,0 +1,174 @@
+.card-1{
+  border-radius: 20px;
+  display: flex;
+  padding: 12px;
+
+  .card-l{
+    padding: 0 5px;
+    height: fit-content;
+
+    .logo-icon-wrapper{
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: var(--color-surface-300);
+      padding: 8px;
+
+      .logo-icon{
+        width: 50px;
+        height: 50px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        overflow: hidden;
+
+        img{
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+        }
+      }
+    }
+  }
+
+  .card-r{
+    width: 100%;
+    padding: 0 5px;
+
+    .card-top{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 5px;
+
+      .company-name{
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        color: var(--color-text-200);
+
+        .companyName{
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--color-text-100);
+        }
+
+        .verified{
+          i{
+            color: #3498db;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+
+    .card-content{
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      padding: 5px;
+
+      .location{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+        font-size: 16px;
+        color: var(--color-text-200);
+      }
+
+      .job-title{
+        font-size: 18px;
+        font-weight: 500;
+        color: var(--color-text-200);
+        transition: color .3s ease-in-out;
+
+        &:hover{
+          cursor: pointer;
+          color: var(--color-primary-200);
+        }
+      }
+
+      .opens-ago{
+        font-size: 14px;
+        color: var(--color-text-200);
+      }
+
+      .tag{
+        text-align: center;
+        padding: 4px 6px;
+        background-color: var(--color-surface-400);
+        border-radius: 5px;
+        color: var(--color-text-200);
+        font-size: 12px;
+      }
+
+      .salary-range{
+        color: var(--color-text-200);
+        font-size: 14px;
+        i{
+          color: #2ecc71;
+          font-size: 16px;
+        }
+      }
+    }
+
+    .card-bottom{
+      padding: 0;
+      background-color: transparent;
+
+      .apply-btn{
+        width: fit-content;
+        padding: 5px 20px;
+        border-radius: 20px;
+        background-color: var(--color-primary-100);
+        color: #FFFFFF;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        border: none;
+        outline: none;
+
+        &:hover{
+          background-color: var(--color-primary-300);
+        }
+      }
+    }
+  }
+}
+
+.card-top-right{
+  .visit-link-circle-card-1{
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary-200);
+    background-color: var(--color-primary-600-opacity-9);
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+
+    i{
+      font-size: 16px;
+    }
+
+    .liked{
+      color: red;
+    }
+  }
+
+  &:hover{
+    .visit-link-circle-card-1{
+      background-color: var(--color-primary-200);
+      color: #fff;
+    }
+  }
+}

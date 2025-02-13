@@ -1,0 +1,71 @@
+.profile-wrapper{
+  width: max(80px, 1vw);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-surface-mixed-200);
+  margin-right: max(10px, 1vw);
+
+  img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.name-tag{
+  color: var(--color-text-100);
+  font-weight: 600;
+  font-size: 16px;
+
+  a{
+    color: var(--color-text-100);
+    text-decoration: none;
+    transition: .3s ease-in-out;
+
+    &:hover{
+      color: var(--color-text-200);
+    }
+  }
+}
+
+.career-tag{
+  color: var(--color-text-200);
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.location-tag{
+  color: var(--color-text-200);
+  font-weight: 400;
+  font-size: 12px;
+}
+
+.button-wrapper{
+  .follow-btn{
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid var(--color-primary-200);
+    background-color: var(--color-surface-mixed-200);
+    color: var(--color-text-100);
+    transition: .3s ease-in-out;
+
+    &:hover{
+      background-color: var(--color-primary-200);
+      color: #fff;
+    }
+  }
+}
+
+hr{
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  height: 1px;
+  width: 100%;
+  background-color: var(--color-surface-mixed-600);
+}

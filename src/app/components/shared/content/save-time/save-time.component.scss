@@ -1,0 +1,41 @@
+.image-wrapper{
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img{
+    width: 70%;
+
+    @media screen and (max-width: 768px){
+      width: 80%;
+    }
+  }
+}
+
+.card-4-section{
+  .card-4{
+
+    .icon-wrapper{
+      width: 60px;
+      height: 60px;
+      padding: 10px;
+
+      img{
+        width: 100%;
+      }
+    }
+
+    &:hover{
+      background-color: var(--color-primary-600-opacity-3);
+
+      .icon-wrapper{
+        background-color: var(--color-primary-600-opacity-9);
+      }
+    }
+  }
+}
+
+strong{
+  font-weight: 450;
+}
