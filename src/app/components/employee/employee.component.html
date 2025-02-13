@@ -1,0 +1,209 @@
+<!--<div class="deprecated-wrapper">-->
+<!--  <div class="deprecated">-->
+<!--    <p>⚠️ This website is deprecated and no longer maintained. We are working on a new version.</p>-->
+<!--    <p>Refer 👉 <a href="https://talentboozt.com">talentboozt.com</a> for unstoppable user experience!</p>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="top-banner">
+  <div class="curved-div">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>Employees</h1>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="search-box">
+      <div class="d-md-flex align-items-center justify-content-center">
+        <div class="d-sm-flex align-items-center justify-content-center w-100">
+          <div class="search-items">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <input type="text" placeholder="Search Employees" (keyup)="handleEmployeeSearch($event.target)" #employeeSearchInput>
+          </div>
+          <div class="d-none d-sm-flex vr-line"></div>
+          <div class="search-items">
+            <i class="fa fa-briefcase" aria-hidden="true"></i>
+            <input type="text" placeholder="Occupation" (keyup)="handleLocationSearch($event.target)">
+          </div>
+        </div>
+        <button class="search-button"
+                (click)="isClearButtonVisible ? clearSearch():''">{{isClearButtonVisible ? 'Clear Filters' : 'Search'}}</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="container popular-jobs">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 col-lg-3 mb-3" *ngFor="let re of paginatedEmployees; let i = index">
+          <div class="employee-card">
+            <div class="d-flex align-items-center justify-content-between w-100">
+            <span class="top-rated" *ngIf="re.companyId != null">
+              <i class="material-icons">star_border</i>
+            </span>
+              <span class="favorite" [ngClass]="followingIds.includes(re.id) ? 'active' : ''">
+              <i class="material-icons">favorite</i>
+            </span>
+            </div>
+
+            <div class="profile-wrapper">
+              <img [src]="re?.image ? re?.image : './assets/imgs/shared/default_emp_dp.svg'" alt="profile" class="profile-img">
+            </div>
+
+            <div class="name">{{re?.firstname ? re?.firstname + ' ' + re?.lastname : 'N/A'}}</div>
+            <div class="title">{{re.occupation ? re.occupation : 'N/A'}}</div>
+
+            <div class="keywords">
+              <div class="d-flex align-items-center justify-content-around w-100 gap-1">
+                <div class="key" *ngFor="let k of re?.keywords?.split(',')">{{k}}</div>
+              </div>
+            </div>
+
+            <div class="d-flex align-items-center justify-content-around w-100">
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="caption">Salary:</div>
+                <div class="value">{{re?.expectedSalaryRange ? re?.expectedSalaryRange : 'N/A'}}</div>
+              </div>
+              <div class="d-flex flex-column align-items-center justify-content-center">
+                <div class="caption">Experience:</div>
+                <div class="value">{{re?.currentExperience ? re?.currentExperience : 'N/A'}}</div>
+              </div>
+            </div>
+
+            <button class="btn-1" (click)="viewProfile(re?.id)">Profile</button>
+          </div>
+        </div>
+
+        <div class="no-results-found" *ngIf="employees?.length === 0">
+          <h3>Sorry! No results found :(</h3>
+          <img src="./assets/imgs/shared/not-found.svg" alt="404">
+        </div>
+
+        <div class="search-result-not-found" *ngIf="isSearchResultNotFound && employees?.length > 0">
+          <h3>No search results found</h3>
+          <img src="./assets/imgs/shared/result_not_found.svg" alt="404">
+          <p>Try different keywords or location</p>
+        </div>
+      </div>
+
+      <!-- Pagination -->
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+            <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of pages" [ngClass]="{ 'active': currentPage === page }">
+            <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+          </li>
+          <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+            <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+
+  <div class="sub-topic-section">
+    <h3>Here's why you'll love it</h3>
+    <p>Finding the right job shouldn’t be complicated. Our platform is designed to help you connect with top employers,
+      showcase your skills, and find opportunities that match your career goals. From personalized job recommendations
+      to powerful career resources, we’re here to support every step of your job search journey. Discover the benefits
+      of joining our community and start building the future you want.</p>
+  </div>
+
+  <div class="card-4-section">
+    <div class="row">
+      <div class="col-6 col-md-3 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="material-icons">phone</i>
+          </div>
+          <div class="card-4-title" routerLink="/support">24/7 Support</div>
+          <div class="card-4-cont">Many desktop publishing now use and a search for job</div>
+          <div class="card-4-text-btn" routerLink="/support">Read More<i class="material-icons">arrow_right_alt</i></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="material-icons">webhook</i>
+          </div>
+          <div class="card-4-title" routerLink="/tech-and-startup-jobs">Tech & Startup Jobs</div>
+          <div class="card-4-cont">Many desktop publishing now use and a search for job</div>
+          <div class="card-4-text-btn" routerLink="/tech-and-startup-jobs">Read More<i class="material-icons">arrow_right_alt</i></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="material-icons">person_add_alt</i>
+          </div>
+          <div class="card-4-title" routerLink="/quick-and-easy">Quick & Easy</div>
+          <div class="card-4-cont">Many desktop publishing now use and a search for job</div>
+          <div class="card-4-text-btn" routerLink="/quick-and-easy">Read More<i class="material-icons">arrow_right_alt</i></div>
+        </div>
+      </div>
+      <div class="col-6 col-md-3 mb-3">
+        <div class="card-4">
+          <div class="icon-wrapper">
+            <i class="material-icons">hourglass_empty</i>
+          </div>
+          <div class="card-4-title" routerLink="/save-time">Save Time</div>
+          <div class="card-4-cont">Many desktop publishing now use and a search for job</div>
+          <div class="card-4-text-btn" routerLink="/save-time">Read More<i class="material-icons">arrow_right_alt</i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<button class="category-btn" data-bs-toggle="offcanvas" data-bs-target="#offcanvasWithBothOptions"
+        aria-controls="offcanvasWithBothOptions">
+  CATEGORIES
+</button>
+
+<div class="offcanvas offcanvas-start category-offcanvas" data-bs-scroll="true" tabindex="-1"
+     id="offcanvasWithBothOptions"
+     aria-labelledby="offcanvasWithBothOptionsLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasWithBothOptionsLabel">Categories</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+
+    <div class="sub-topic">
+      <i class="material-icons">category</i>
+      <span>Choose an Occupation</span>
+    </div>
+
+    <div class="container my-2">
+      <div *ngFor="let cat of filterCategoriesList; let i = index">
+        <div class="accordion" id="accordionCategory">
+          <div class="accordion-item">
+            <h2 class="accordion-header">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#'+i"
+                      aria-expanded="false" [attr.aria-controls]="i">
+                {{cat.name}}
+              </button>
+            </h2>
+            <div [id]="i" class="accordion-collapse collapse" data-bs-parent="#accordionCategory">
+              <div class="accordion-body" *ngFor="let sc of cat.subCategories">
+                <ul class="category-list">
+                  <li (click)="selectCategory(sc.name)">{{sc.name}}</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+.image-wrapper{
+  width: 100%;
+  height: 100%;
+  padding: 0 max(20px, 4vw);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img{
+    width: 100%;
+    height: auto;
+  }
+}
+
+.title{
+  margin: 12px 0;
+  font-weight: 600;
+  color: var(--color-text-100);
+  font-size: 18px;
+}
+
+ul{
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  li{
+    margin: 8px 0;
+    position: relative;
+    text-align: justify;
+    display: flex;
+    align-items: flex-start;
+    color: var(--color-text-200);
+
+    strong{
+      font-weight: 500;
+      white-space: nowrap;
+
+      a{
+        text-decoration: none;
+        color: var(--color-text-200);
+
+        i{
+          font-size: 11px;
+        }
+      }
+    }
+  }
+  li:before{
+    content: 'check_circle_outline';
+    font-family: 'Material Icons';
+    font-size: 18px;
+    color: var(--color-primary-400);
+    margin-right: 6px;
+  }
+}

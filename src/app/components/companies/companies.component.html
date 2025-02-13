@@ -1,0 +1,119 @@
+<!--<div class="deprecated-wrapper">-->
+<!--  <div class="deprecated">-->
+<!--    <p>⚠️ This website is deprecated and no longer maintained. We are working on a new version.</p>-->
+<!--    <p>Refer 👉 <a href="https://talentboozt.com">talentboozt.com</a> for unstoppable user experience!</p>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="top-banner">
+  <div class="curved-div">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>Companies for you</h1>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="search-box">
+      <div class="d-md-flex align-items-center justify-content-center">
+        <div class="d-sm-flex align-items-center justify-content-center w-100">
+          <div class="search-items">
+            <i class="fa fa-building" aria-hidden="true"></i>
+            <input type="text" placeholder="Search Company" (keyup)="handleCompanySearch($event.target)">
+          </div>
+          <div class="d-none d-sm-flex vr-line"></div>
+          <div class="search-items">
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <input type="text" placeholder="Location" (keyup)="handleLocationSearch($event.target)">
+          </div>
+        </div>
+        <button class="search-button">Search</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="container">
+  <div class="popular-companies">
+    <div class="row">
+      <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let c of paginatedCompanies; let i = index;">
+        <div class="card-2">
+          <div class="card-top">
+            <div class="logo-icon-wrapper">
+              <div class="logo-icon">
+                <img
+                  [src]="c.logo ? c.logo : './assets/imgs/shared/default_org_logo.svg'"
+                  alt="{{c.name}}">
+              </div>
+            </div>
+          </div>
+
+          <div class="card-content">
+            <div class="d-flex flex-column align-items-start">
+              <div class="company-name" routerLink="/business-profile/{{c.id}}">{{c.name}}</div>
+              <div class="company-description">{{c.shortDescription ? (c.shortDescription | truncate : 50) : c.companyStory | truncate : 50}}</div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-bottom">
+            <div class="card-bottom-right">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>{{c.location ? c.location : 'N/A'}}</span>
+            </div>
+            <div class="card-bottom-left">
+              <div class="open-jobs">{{ getJobCount(c.id) }} Jobs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-results-found" *ngIf="companyDataStore?.length <= 0">
+        <h3>Sorry! No results found :(</h3>
+        <img src="./assets/imgs/shared/not-found.svg" alt="404">
+      </div>
+
+      <div class="search-result-not-found" *ngIf="isSearchResultNotFound && companyDataStore?.length > 0">
+        <h3>No search results found</h3>
+        <img src="./assets/imgs/shared/result_not_found.svg" alt="404">
+        <p>Try different keywords or location</p>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <li class="page-item" [ngClass]="{ 'disabled': currentPage === 1 }">
+          <a class="page-link" (click)="changePage(currentPage - 1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" *ngFor="let page of pages" [ngClass]="{ 'active': currentPage === page }">
+          <a class="page-link" (click)="changePage(page)">{{ page }}</a>
+        </li>
+        <li class="page-item" [ngClass]="{ 'disabled': currentPage === totalPages }">
+          <a class="page-link" (click)="changePage(currentPage + 1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+
+  <div *ngIf="targetInput1 === undefined && targetInput2 === undefined">
+    <app-hire-card1></app-hire-card1>
+  </div>
+
+  <div *ngIf="!loading && serverError">
+    <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && !filteredCompanies">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && !filteredCompanies || unexpectedError">
+    <app-forbidden></app-forbidden>
+  </div>
+</div>

@@ -1,0 +1,309 @@
+<div *ngIf="loading"><app-page-loading></app-page-loading></div>
+
+<div class="top-banner" style="overflow-x: hidden" *ngFor="let c of filterCompanyData()">
+  <div class="curved-div">
+    <div class="overlay" [ngStyle]="{'background-image': c.coverImage ? 'url(' + c.coverImage + ')' : '', 'background-size': c.coverImage ? '100vw auto':''}"></div>
+  </div>
+
+  <div class="container">
+    <div class="d-flex align-items-center justify-content-center w-100 position-relative">
+      <div class="org-top-card">
+        <div class="d-md-flex align-items-center justify-content-center">
+          <div class="d-sm-flex align-items-center justify-content-between w-100">
+            <div class="right-cont">
+              <div class="d-flex align-items-center mb-3 mb-sm-0">
+                <div class="company-logo">
+                  <img [src]="c.logo ? c.logo : './assets/imgs/shared/default_org_logo.svg'"
+                       alt="{{c.name}}">
+                </div>
+                <div class="d-flex flex-column">
+                  <div class="company-name">{{c.name}}</div>
+                  <div class="company-location"><i class="material-icons">location_on</i> {{c.location}}</div>
+                </div>
+              </div>
+            </div>
+            <div class="left-cont">
+              <button class="btn-1" [disabled]="!followBtn"
+                      (click)="followingsIds.includes(c.id) ? unfollow(c) : follow(c)">
+                {{followingsIds.includes(c.id) ? 'Unfollow' : 'Follow'}}
+              </button>
+              <button class="btn-2" routerLink="/company-jobs/{{c.id}}">See Jobs</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row my-3 second-content" *ngFor="let c of filterCompanyData()">
+    <div class="col-12 col-md-6 col-lg-8 left-side">
+      <div *ngIf="c.companyStory">
+        <h5>Company Story</h5>
+        <p *ngFor="let s of c.companyStory.split('\n')">{{s}}</p>
+      </div>
+
+      <div class="row row-gap-3">
+        <div class="col-12" *ngIf="c.image1">
+          <img [src]="c.image1" alt="banner" class="org-img">
+        </div>
+        <div class="col-12 col-sm-6" *ngIf="c.image2">
+          <img [src]="c.image2" alt="banner" class="org-img">
+        </div>
+        <div class="col-12 col-sm-6" *ngIf="c.image3">
+          <img [src]="c.image3" alt="banner" class="org-img">
+        </div>
+      </div>
+
+      <div *ngIf="c.postedJobs">
+        <h5>Vacancies</h5>
+        <div class="popular-jobs">
+          <div class="row" *ngFor="let pj of filterPostedJobsData()">
+            <div class="col-12 col-lg-6 mb-3 mb-lg-0" *ngFor="let j of pj.postedJobs | sort:'expiryDate':'desc' | truncateComments: 2; let i = index">
+              <div class="card-1" *ngIf="notExpired(j.expiryDate, j.datePosted)">
+                <div class="card-top">
+                  <div class="card-top-left d-flex align-items-center">
+                    <div class="logo-icon-wrapper">
+                      <div class="logo-icon">
+                        <img
+                          [src]="pj.companyLogo ? pj.companyLogo : './assets/imgs/shared/default_org_logo.svg'"
+                          alt="{{pj.companyName}}">
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column align-items-start justify-content-between">
+                      <div class="company-name">{{pj.companyName}}</div>
+                      <div class="opens-ago">{{j.datePosted | timeAgo}}</div>
+                    </div>
+                  </div>
+                  <div class="card-top-right">
+                    <div class="visit-link-circle">
+                      <i class="material-icons" routerLink="/job-details/{{j.id}}">call_made</i>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-content">
+                  <div class="card-content-left">
+                    <div class="d-flex flex-column align-items-start">
+                      <div class="job-title" routerLink="/job-details/{{j.id}}">{{j.title}}</div>
+                      <div class="open-positions">Total Openings: {{j.totalOpenings}}</div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-bottom">
+                  <div *ngIf="j.companyLevel != '1'"></div>
+                  <div class="card-bottom-left" *ngIf="j.companyLevel == '1'">
+                    <i class="material-icons">verified</i>
+                    <span>Verified</span>
+                  </div>
+                  <div class="card-bottom-right">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <span>{{j.location}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="card-1" *ngIf="!notExpired(j.expiryDate, j.datePosted)">
+                <div class="card-top">
+                  <div class="card-top-left d-flex align-items-center">
+                    <div class="logo-icon-wrapper">
+                      <div class="logo-icon">
+                        <img
+                          [src]="pj.companyLogo ? pj.companyLogo : './assets/imgs/shared/default_org_logo.svg'"
+                          alt="{{pj.companyName}}">
+                      </div>
+                    </div>
+                    <div class="d-flex flex-column align-items-start justify-content-between">
+                      <div class="company-name">{{pj.companyName}}</div>
+                      <div class="opens-ago">{{j.datePosted | timeAgo}}</div>
+                    </div>
+                  </div>
+                  <div class="card-top-right">
+                    <div class="visit-link-circle">
+                      <i class="material-icons">call_made</i>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-content">
+                  <div class="card-content-left">
+                    <div class="d-flex flex-column align-items-start">
+                      <div class="job-title">{{j.title}}</div>
+                      <div class="open-positions">Total Openings: {{j.totalOpenings}}</div>
+                    </div>
+                  </div>
+                </div>
+                <hr>
+                <div class="card-bottom">
+                  <div *ngIf="j.companyLevel != '1'"></div>
+                  <div class="card-bottom-left" *ngIf="j.companyLevel == '1'">
+                    <i class="material-icons">verified</i>
+                    <span>Verified</span>
+                  </div>
+                  <div class="card-bottom-right" style="color: red">
+                    <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                    <span>Unavailable</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrapper w-100">
+        <div class="form-card-1" style="max-width: unset">
+          <h5>Contact Us:</h5>
+          <form [formGroup]="contactUsForm">
+            <div class="row form-wrapper w-100">
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="name">Your Name</label>
+                  <input type="text" class="form-control" id="name" placeholder="John Doe" formControlName="name">
+                </div>
+              </div>
+
+              <div class="col-12 col-md-6">
+                <div class="form-group">
+                  <label for="email">Email Address</label>
+                  <input type="email" class="form-control" id="email" placeholder="XwVpP@example.com" formControlName="email">
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="subject">Subject</label>
+                  <input type="text" class="form-control" id="subject" placeholder="Your Question" formControlName="subject">
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <label for="comment">Comment</label>
+                  <textarea class="form-control" id="comment" rows="5" placeholder="Your Message" formControlName="message"></textarea>
+                </div>
+              </div>
+
+              <div class="col-12">
+                <div class="form-group">
+                  <button type="submit" class="btn-1" [disabled]="mailLoading" (click)="contact()">{{mailLoading?'Sending...':'Send Message'}}</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-12 col-md-6 col-lg-4 right-side">
+      <div class="details-card-1">
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="caption"><i class="material-icons">emoji_events</i><span>Founded:</span></div>
+          <div class="value">{{c?.foundedDate ? c?.foundedDate : 'N/A'}}</div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="caption"><i class="material-icons">admin_panel_settings</i><span>Founder:</span></div>
+          <div class="value">{{c?.founderName ? c?.founderName : 'N/A'}}</div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="caption"><i class="material-icons">business</i><span>Head Quarters:</span></div>
+          <div class="value">{{c?.headquarters ? c?.headquarters : 'N/A'}}</div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="caption"><i class="material-icons">manage_accounts</i><span>Number of Employees:</span></div>
+          <div class="value">{{c?.numberOfEmployees ? c?.numberOfEmployees : 'N/A'}}</div>
+        </div>
+        <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="caption"><i class="material-icons">language</i><span>Website:</span></div>
+          <div class="value"><a [href]="c?.company?.website ? c?.company?.website : '/#/'">{{c?.company?.website ? c?.company?.website : 'N/A'}}</a></div>
+        </div>
+
+        <div class="d-flex align-items-center justify-content-between w-100" *ngIf="filterSocialsData().length > 0">
+          <div class="caption">Social:</div>
+          <div *ngFor="let sl of filterSocialsData()">
+            <div class="item-set" *ngFor="let s of sl.socialLinks">
+              <div class="social-item" *ngIf="s.linkedin">
+                <a href="{{s.linkedin}}" target="_blank"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item" *ngIf="s.facebook">
+                <a href="{{s.facebook}}" target="_blank"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item" *ngIf="s.instagram">
+                <a href="{{s.instagram}}" target="_blank"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item" *ngIf="s.twitter">
+                <a href="{{s.twitter}}" target="_blank"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item" *ngIf="s.github">
+                <a href="{{s.github}}" target="_blank"><i class="fa fa-github" aria-hidden="true"></i></a>
+              </div>
+              <div class="social-item">
+                <a href="mailto:{{c.contactEmail}}"><i class="fa fa-envelope-o" aria-hidden="true"></i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="relatedCompanies">
+    <div class="sub-topic-section">
+      <h3>Related Companies</h3>
+      <p>Discover the best workplaces and unlock your potential.</p>
+    </div>
+
+    <div class="popular-companies">
+      <div class="row">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4" *ngFor="let rc of relatedCompanies | truncateComments:4">
+          <div class="card-2">
+            <div class="card-top">
+              <div class="logo-icon-wrapper">
+                <div class="logo-icon">
+                  <img
+                    [src]="rc.logo ? rc.logo : './assets/imgs/shared/default_org_logo.svg'"
+                    alt="logo">
+                </div>
+              </div>
+            </div>
+
+            <div class="card-content">
+              <div class="d-flex flex-column align-items-start">
+                <div class="company-name" (click)="viewProfile(rc?.id)">{{rc.name ? rc.name : 'Not Provided'}}</div>
+                <div class="company-description">{{rc.shortDescription ? (rc.shortDescription | truncate:40) : rc.description | truncate:40}}</div>
+              </div>
+            </div>
+            <hr>
+            <div class="card-bottom">
+              <div *ngIf="rc?.companyLevel != '3' && rc?.companyLevel != '4'"></div>
+              <div class="card-bottom-left" *ngIf="rc?.companyLevel == '3' || rc?.companyLevel == '4'">
+                <i class="material-icons">verified</i>
+                <span>Verified</span>
+              </div>
+              <div class="card-bottom-right">
+                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                <span>{{rc?.location ? rc?.location?.split(',')[0] : 'N/A'}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-job-ad-card1></app-job-ad-card1>
+</div>
+
+<div *ngIf="!loading && serverError">
+  <app-failed-to-load-data></app-failed-to-load-data>
+</div>
+<div *ngIf="notFound && !filterCompanyData()">
+  <app-result-not-found></app-result-not-found>
+</div>
+<div *ngIf="corsError">
+  <app-network-error></app-network-error>
+</div>
+<div *ngIf="forbidden && !filterCompanyData() || unexpectedError">
+  <app-forbidden></app-forbidden>
+</div>

@@ -1,0 +1,672 @@
+<!--<div class="deprecated-wrapper">-->
+<!--  <div class="deprecated">-->
+<!--    <p>⚠️ This website is deprecated and no longer maintained. We are working on a new version.</p>-->
+<!--    <p>Refer 👉 <a href="https://talentboozt.com">talentboozt.com</a> for unstoppable user experience!</p>-->
+<!--  </div>-->
+<!--</div>-->
+<div class="main-content-wrapper">
+  <div class="main-wrapper">
+    <app-header></app-header>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-7 col-lg-6">
+          <div class="hero-left">
+            <h1>Unlock <span>Your</span></h1>
+            <h1><span>Future</span> with the </h1>
+            <h1>Perfect Job</h1>
+
+            <div>
+              <p>Explore Exciting Opportunities in Top Companies. Find the perfect fit</p>
+            </div>
+
+            <div class="search-box">
+              <div class="d-md-flex align-items-center justify-content-center">
+                <div class="d-sm-flex align-items-center justify-content-center w-100">
+                  <div class="search-items">
+                    <i class="fa fa-briefcase" aria-hidden="true"></i>
+                    <input type="text" placeholder="Search Jobs" [(ngModel)]="jobSearch">
+                  </div>
+                  <div class="d-none d-sm-flex vr-line"></div>
+                  <div class="search-items">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <input type="text" placeholder="Location" [(ngModel)]="locationSearch">
+                  </div>
+                </div>
+                <button class="search-button" (click)="makeSearchQuery()">Search</button>
+              </div>
+            </div>
+
+            <div class="my-2">
+              <p><span class="bold-p">Popular Searches : </span>Designer, Developer, Web, IOS, PHP Senior Engineer
+              </p>
+            </div>
+
+          </div>
+        </div>
+        <div class="col-12 col-md-5 col-lg-6">
+          <div class="hero-right">
+            <div class="content-wrapper">
+              <div class="content">
+                <div class="lg-img">
+                  <img ngSrc="./assets/imgs/home/home-hero.webp"
+                       alt="lg-img" width="650" height="500" priority>
+                </div>
+                <!--            <div class="subscribe-element" (click)="openSubscribeModal()">-->
+                <!--              <mat-icon>notifications_active</mat-icon>-->
+                <!--              <p>Job Alert Subscribe</p>-->
+                <!--            </div>-->
+                <!--            <div class="candidate-element">-->
+                <!--              <p>5k+ candidates get job</p>-->
+                <!--              <div class="candidates-wrapper">-->
+                <!--                <div class="candidate">-->
+                <!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg"-->
+                <!--                       alt="pro" loading="lazy" width="30" height="30">-->
+                <!--                </div>-->
+                <!--                <div class="candidate">-->
+                <!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/02.7df14e12e444ad660802.jpg"-->
+                <!--                       alt="pro" loading="lazy" width="30" height="30">-->
+                <!--                </div>-->
+                <!--                <div class="candidate">-->
+                <!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/03.ba5f8794c055cc1488b5.jpg"-->
+                <!--                       alt="pro" loading="lazy" width="30" height="30">-->
+                <!--                </div>-->
+                <!--                <div class="candidate">-->
+                <!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/04.35463172278c4051b5f4.jpg"-->
+                <!--                       alt="pro" loading="lazy" width="30" height="30">-->
+                <!--                </div>-->
+                <!--                <div class="candidate">-->
+                <!--                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg"-->
+                <!--                       alt="pro" loading="lazy" width="30" height="30">-->
+                <!--                </div>-->
+                <!--                <div class="candidate">-->
+                <!--                  <mat-icon>add</mat-icon>-->
+                <!--                </div>-->
+                <!--              </div>-->
+                <!--            </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h2></h2>
+
+      <div class="sub-topic-section">
+        <h3>Popular Categories</h3>
+        <p>Explore in-demand roles across industries. Whether you're just starting or looking to level up your
+          career, these popular job roles have plenty of opportunities waiting for you:</p>
+      </div>
+
+      <div class="container popular-categories">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-3 mb-2"
+               *ngFor="let j of utilities.popularJobCategories; let i = index">
+            <div class="popular-item-wrapper">
+              <div class="icon-wrapper">
+                <i class="{{j.icon}}" aria-hidden="true"></i>
+              </div>
+              <div class="job-title">{{j.name}}</div>
+              <div class="job-count">{{filterJobs(j.name) ? filterJobs(j.name) : 0}} Jobs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-topic-section" *ngIf="filterJobsAds().length > 0">
+        <h3>Popular Jobs</h3>
+        <p>Discover opportunities around the world. Get salary insights and company reviews from trusted
+          sources.</p>
+      </div>
+
+      <div class="container popular-jobs" *ngIf="filterJobsAds().length > 0">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-6 mb-4"
+                 *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">
+              <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId"
+                                  (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>
+            </div>
+          </div>
+
+          <div class="see-more" *ngIf="filterJobsAds().length >= 4">
+            <div class="see-more-btn" routerLink="/job">See More Jobs <i class="material-icons">arrow_right_alt</i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sub-topic-section" *ngIf="filteredCompanies?.length ? filteredCompanies.length > 0 : false">
+        <h3>Find top Employers</h3>
+        <p>Discover the best workplaces and unlock your potential.</p>
+      </div>
+
+      <div class="popular-companies" *ngIf="filteredCompanies">
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4"
+               *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">
+            <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>
+          </div>
+        </div>
+
+        <div class="see-more" *ngIf="filteredCompanies.length >= 4">
+          <div class="see-more-btn" routerLink="/companies">See More Companies <i
+            class="material-icons">arrow_right_alt</i>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12 col-md-6 col-lg-5">
+            <div class="popular-2-left">
+              <div class="lg-img">
+                <img ngSrc="./assets/imgs/home/home-b-h-1.webp" alt="banner" loading="lazy" height="508"
+                     width="342">
+
+                <div class="play-btn">
+                  <i class="fa fa-play" aria-hidden="true"></i>
+                </div>
+
+                <div class="sm-img">
+                  <img ngSrc="./assets/imgs/home/home-b-v-1.webp" alt="banner" loading="lazy" height="275"
+                       width="408">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-6 col-lg-7">
+            <div class="popular-2-right">
+              <h3>A World of Opportunities.</h3>
+              <h3>Find the one that's right for you.</h3>
+              <div class="my-3">
+                <p>Explore a world of job opportunities. Our platforms helps you get closer to the career of your dreams.</p>
+              </div>
+              <ul>
+                <li>Personalized Job Matches -Get jobs tailored to your skills and preferences with our smart matching algorithm.</li>
+                <li>Access to Premium Employers- Connect with top companies actively seeking qualified candidates.</li>
+                <li>Skill Assessments and Growth -  Take skill assessments to showcase your strengths and attract the right opportunities.</li>
+                <li>Career Resources and Guidance -  Access career advice, interview tips, and resources to excel in your job search.</li>
+                <li>One-Click Apply-Apply to jobs quickly and easily with our streamlined application process.</li>
+              </ul>
+              <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact
+                us
+              </button>
+            </div>
+          </div>
+        </div>
+<!--        <div class="row flex-row-reverse">-->
+<!--          <div class="col-12 col-md-6 col-lg-5">-->
+<!--            <div class="popular-2-left" style="transform: scaleX(-1)">-->
+<!--              <div class="lg-img">-->
+<!--                <img ngSrc="./assets/imgs/home/home-b-h-2.webp" alt="banner" loading="lazy" height="508"-->
+<!--                     width="342">-->
+
+<!--                <div class="play-btn" style="transform: scale(-1)">-->
+<!--                  <i class="fa fa-play" aria-hidden="true"></i>-->
+<!--                </div>-->
+
+<!--                <div class="sm-img">-->
+<!--                  <img ngSrc="./assets/imgs/home/home-b-v-2.webp" alt="banner" loading="lazy" height="275"-->
+<!--                       width="408">-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--          <div class="col-12 col-md-6 col-lg-7">-->
+<!--            <div class="popular-2-right">-->
+<!--              <h3>A World of Opportunities.</h3>-->
+<!--              <h3>Find the one that's right for you.</h3>-->
+<!--              <div class="my-3">-->
+<!--                <p>Explore a world of job opportunities. Our platforms helps you get closer to the career of your dreams.</p>-->
+<!--              </div>-->
+<!--              <ul>-->
+<!--                <li>Access to a Diverse Talent Pool- Connect with qualified candidates from various industries and backgrounds</li>-->
+<!--                <li>Employer Branding Tools- Build your brand with customizable company profiles and featured job postings to attract top talent.</li>-->
+<!--                <li>Flexible Job Posting Packages -Choose from multiple posting options that fit your hiring needs , from single listings to subscription plans.</li>-->
+<!--                <li>Priority Support- Get help when you need it with dedicated support to assist in your hiring process.</li>-->
+<!--              </ul>-->
+<!--              <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact-->
+<!--                us-->
+<!--              </button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+      </div>
+    </div>
+
+    <div class="overlay-banner-lg" *ngIf="false">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="d-flex flex-column align-items-center justify-content-center banner-content">
+          <div class="overlay-banner-title">Get the job that's right for you</div>
+          <div class="container">
+            <div class="overlay-banner-text">We help you find the job of your dreams by providing you a world of
+              opportunities
+              for you. Our Platform gives you personalized job recommendations and provided you with tools and
+              resources
+              to
+              tune up you Skills.
+            </div>
+          </div>
+          <div class="overlay-banner-button"><i class="fa fa-play" aria-hidden="true"></i></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div *ngIf="false" class="row achievements" #achievementsSection>
+        <div class="col-12 col-sm-6 col-md-4 achievement">
+          <div class="achievement-score" translate="no">{{jobsAchValue}}+</div>
+          <div class="achievement-title">AVAILABLE JOBS NOW</div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-4 achievement">
+          <div class="achievement-score" translate="no">{{branchesAchValue}}+</div>
+          <div class="achievement-title">COMPANIES</div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-4 achievement">
+          <div class="achievement-score" translate="no">{{countriesAchValue}}+</div>
+          <div class="achievement-title">COUNTRIES</div>
+        </div>
+      </div>
+
+      <div style="padding: max(30px, 3vw) 0;">
+        <app-hire-card1></app-hire-card1>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</div>
+
+<!--<div>-->
+<!--  <div class="scrollDist">-->
+<!--    <div class="main-content-wrapper">-->
+<!--      <div class="wave-wrapper">-->
+<!--        <svg width="100%" height="100%" id="svg" viewBox="0 0 1440 200" xmlns="http://www.w3.org/2000/svg"-->
+<!--             class="transition duration-300 ease-in-out delay-150">-->
+<!--          <defs>-->
+<!--            <linearGradient id="gradient" x1="50%" y1="10%" x2="50%" y2="80%">-->
+<!--              <stop offset="0%" stop-color="var(&#45;&#45;color-primary-100)"></stop>-->
+<!--              <stop offset="100%" stop-color="var(&#45;&#45;color-surface-mixed-100)"></stop>-->
+<!--            </linearGradient>-->
+<!--          </defs>-->
+<!--          <path-->
+<!--            d="M 0,400 L 0,150 C 58.22603916180006,147.57609069048436 116.45207832360012,145.15218138096876 188,157 C 259.5479216763999,168.84781861903124 344.41772586739955,194.96736516660943 424,201 C 503.58227413260045,207.03263483339057 577.8770182068018,192.97835795259363 648,202 C 718.1229817931982,211.02164204740637 784.0742013053931,243.11920302301615 853,221 C 921.9257986946069,198.88079697698385 993.8261765716252,122.5448299553418 1065,104 C 1136.1738234283748,85.4551700446582 1206.621092408107,124.70147715561663 1269,142 C 1331.378907591893,159.29852284438337 1385.6894537959465,154.64926142219167 1440,150 L 1440,400 L 0,400 Z"-->
+<!--            stroke="none" stroke-width="0" fill="url(#gradient)" fill-opacity=".8"-->
+<!--            class="transition-all duration-300 ease-in-out delay-150 path-0"></path>-->
+<!--        </svg>-->
+<!--      </div>-->
+<!--      <div class="main-wrapper">-->
+<!--        <app-header></app-header>-->
+
+<!--        <div class="container">-->
+<!--          <div class="row">-->
+<!--            <div class="col-12 col-md-7 col-lg-6">-->
+<!--              <div class="hero-left">-->
+<!--                <h1>Unlock <span>Your</span></h1>-->
+<!--                <h1><span>Future</span> with the </h1>-->
+<!--                <h1>Perfect Job</h1>-->
+
+<!--                <div>-->
+<!--                  <p>Explore Exciting Opportunities in Top Companies. Find the perfect fit</p>-->
+<!--                </div>-->
+
+<!--                <div class="search-box">-->
+<!--                  <div class="d-md-flex align-items-center justify-content-center">-->
+<!--                    <div class="d-sm-flex align-items-center justify-content-center w-100">-->
+<!--                      <div class="search-items">-->
+<!--                        <i class="fa fa-briefcase" aria-hidden="true"></i>-->
+<!--                        <input type="text" placeholder="Search Jobs" [(ngModel)]="jobSearch">-->
+<!--                      </div>-->
+<!--                      <div class="d-none d-sm-flex vr-line"></div>-->
+<!--                      <div class="search-items">-->
+<!--                        <i class="fa fa-map-marker" aria-hidden="true"></i>-->
+<!--                        <input type="text" placeholder="Location" [(ngModel)]="locationSearch">-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <button class="search-button" (click)="makeSearchQuery()">Search</button>-->
+<!--                  </div>-->
+<!--                </div>-->
+
+<!--                <div class="my-2">-->
+<!--                  <p><span class="bold-p">Popular Searches : </span>Designer, Developer, Web, IOS, PHP Senior Engineer-->
+<!--                  </p>-->
+<!--                </div>-->
+
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="col-12 col-md-5 col-lg-6">-->
+<!--              <div class="hero-right">-->
+<!--                <div class="content-wrapper">-->
+<!--                  <div class="content">-->
+<!--                    <div class="lg-img">-->
+<!--                      <img ngSrc="./assets/imgs/home/home-hero.webp"-->
+<!--                           alt="lg-img" width="650" height="500" priority>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash;            <div class="subscribe-element" (click)="openSubscribeModal()">&ndash;&gt;-->
+<!--                    &lt;!&ndash;              <mat-icon>notifications_active</mat-icon>&ndash;&gt;-->
+<!--                    &lt;!&ndash;              <p>Job Alert Subscribe</p>&ndash;&gt;-->
+<!--                    &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;            <div class="candidate-element">&ndash;&gt;-->
+<!--                    &lt;!&ndash;              <p>5k+ candidates get job</p>&ndash;&gt;-->
+<!--                    &lt;!&ndash;              <div class="candidates-wrapper">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <div class="candidate">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/01.6ac85de7298319b1f8d5.jpg"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                       alt="pro" loading="lazy" width="30" height="30">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <div class="candidate">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/02.7df14e12e444ad660802.jpg"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                       alt="pro" loading="lazy" width="30" height="30">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <div class="candidate">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/03.ba5f8794c055cc1488b5.jpg"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                       alt="pro" loading="lazy" width="30" height="30">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <div class="candidate">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/04.35463172278c4051b5f4.jpg"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                       alt="pro" loading="lazy" width="30" height="30">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <div class="candidate">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                  <img ngSrc="https://jobstack-shreethemes.vercel.app/static/media/05.a7ab2c82813cb95da9d6.jpg"&ndash;&gt;-->
+<!--                    &lt;!&ndash;                       alt="pro" loading="lazy" width="30" height="30">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                <div class="candidate">&ndash;&gt;-->
+<!--                    &lt;!&ndash;                  <mat-icon>add</mat-icon>&ndash;&gt;-->
+<!--                    &lt;!&ndash;                </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;              </div>&ndash;&gt;-->
+<!--                    &lt;!&ndash;            </div>&ndash;&gt;-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <h2></h2>-->
+
+<!--          <div class="sub-topic-section">-->
+<!--            <h3>Popular Categories</h3>-->
+<!--            <p>Explore in-demand roles across industries. Whether you're just starting or looking to level up your-->
+<!--              career, these popular job roles have plenty of opportunities waiting for you:</p>-->
+<!--          </div>-->
+
+<!--          <div class="container popular-categories">-->
+<!--            <div class="row">-->
+<!--              <div class="col-12 col-sm-6 col-md-3 mb-2"-->
+<!--                   *ngFor="let j of utilities.popularJobCategories; let i = index">-->
+<!--                <div class="popular-item-wrapper">-->
+<!--                  <div class="icon-wrapper">-->
+<!--                    <i class="{{j.icon}}" aria-hidden="true"></i>-->
+<!--                  </div>-->
+<!--                  <div class="job-title">{{j.name}}</div>-->
+<!--                  <div class="job-count">{{filterJobs(j.name) ? filterJobs(j.name) : 0}} Jobs</div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="sub-topic-section" *ngIf="filterJobsAds().length > 0">-->
+<!--            <h3>Popular Jobs</h3>-->
+<!--            <p>Discover opportunities around the world. Get salary insights and company reviews from trusted-->
+<!--              sources.</p>-->
+<!--          </div>-->
+
+<!--          <div class="container popular-jobs" *ngIf="filterJobsAds().length > 0">-->
+<!--            <div class="container">-->
+<!--              <div class="row">-->
+<!--                <div class="col-12 col-md-6 mb-4"-->
+<!--                     *ngFor="let p of filterJobsAds() | truncateComments: 4; let i = index">-->
+<!--                  <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId"-->
+<!--                                      (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>-->
+<!--                </div>-->
+<!--              </div>-->
+
+<!--              <div class="see-more" *ngIf="filterJobsAds().length >= 4">-->
+<!--                <div class="see-more-btn" routerLink="/job">See More Jobs <i class="material-icons">arrow_right_alt</i>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="sub-topic-section" *ngIf="filteredCompanies?.length ? filteredCompanies.length > 0 : false">-->
+<!--            <h3>Find top Employers</h3>-->
+<!--            <p>Discover the best workplaces and unlock your potential.</p>-->
+<!--          </div>-->
+
+<!--          <div class="popular-companies" *ngIf="filteredCompanies">-->
+<!--            <div class="row">-->
+<!--              <div class="col-12 col-sm-6 col-md-6 col-lg-3 mb-4 pt-4"-->
+<!--                   *ngFor="let c of filteredCompanies | truncateComments: 4; let i = index">-->
+<!--                <app-company-card1 [c]="c" [jobCount]="getJobCount(c.id)"></app-company-card1>-->
+<!--              </div>-->
+<!--            </div>-->
+
+<!--            <div class="see-more" *ngIf="filteredCompanies.length >= 4">-->
+<!--              <div class="see-more-btn" routerLink="/companies">See More Companies <i-->
+<!--                class="material-icons">arrow_right_alt</i>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div class="container">-->
+<!--            <div class="row">-->
+<!--              <div class="col-12 col-md-6 col-lg-5">-->
+<!--                <div class="popular-2-left">-->
+<!--                  <div class="lg-img">-->
+<!--                    <img ngSrc="./assets/imgs/home/home-b-h-1.webp" alt="banner" loading="lazy" height="508"-->
+<!--                         width="342">-->
+
+<!--                    <div class="play-btn">-->
+<!--                      <i class="fa fa-play" aria-hidden="true"></i>-->
+<!--                    </div>-->
+
+<!--                    <div class="sm-img">-->
+<!--                      <img ngSrc="./assets/imgs/home/home-b-v-1.webp" alt="banner" loading="lazy" height="275"-->
+<!--                           width="408">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-12 col-md-6 col-lg-7">-->
+<!--                <div class="popular-2-right">-->
+<!--                  <h3>A World of Opportunities.</h3>-->
+<!--                  <h3>Find the one that's right for you.</h3>-->
+<!--                  <div class="my-3">-->
+<!--                    <p>Explore a world of job opportunities. Our platforms helps you get closer to the career of your dreams.</p>-->
+<!--                  </div>-->
+<!--                  <ul>-->
+<!--                    <li>Personalized Job Matches -Get jobs tailored to your skills and preferences with our smart matching algorithm.</li>-->
+<!--                    <li>Access to Premium Employers- Connect with top companies actively seeking qualified candidates.</li>-->
+<!--                    <li>Skill Assessments and Growth -  Take skill assessments to showcase your strengths and attract the right opportunities.</li>-->
+<!--                    <li>Career Resources and Guidance -  Access career advice, interview tips, and resources to excel in your job search.</li>-->
+<!--                    <li>One-Click Apply-Apply to jobs quickly and easily with our streamlined application process.</li>-->
+<!--                  </ul>-->
+<!--                  <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact-->
+<!--                    us-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--            <div class="row flex-row-reverse">-->
+<!--              <div class="col-12 col-md-6 col-lg-5">-->
+<!--                <div class="popular-2-left" style="transform: scaleX(-1)">-->
+<!--                  <div class="lg-img">-->
+<!--                    <img ngSrc="./assets/imgs/home/home-b-h-2.webp" alt="banner" loading="lazy" height="508"-->
+<!--                         width="342">-->
+
+<!--                    <div class="play-btn" style="transform: scale(-1)">-->
+<!--                      <i class="fa fa-play" aria-hidden="true"></i>-->
+<!--                    </div>-->
+
+<!--                    <div class="sm-img">-->
+<!--                      <img ngSrc="./assets/imgs/home/home-b-v-2.webp" alt="banner" loading="lazy" height="275"-->
+<!--                           width="408">-->
+<!--                    </div>-->
+<!--                  </div>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="col-12 col-md-6 col-lg-7">-->
+<!--                <div class="popular-2-right">-->
+<!--                  <h3>A World of Opportunities.</h3>-->
+<!--                  <h3>Find the one that's right for you.</h3>-->
+<!--                  <div class="my-3">-->
+<!--                    <p>Explore a world of job opportunities. Our platforms helps you get closer to the career of your dreams.</p>-->
+<!--                  </div>-->
+<!--                  <ul>-->
+<!--                    <li>Access to a Diverse Talent Pool- Connect with qualified candidates from various industries and backgrounds</li>-->
+<!--                    <li>Employer Branding Tools- Build your brand with customizable company profiles and featured job postings to attract top talent.</li>-->
+<!--                    <li>Flexible Job Posting Packages -Choose from multiple posting options that fit your hiring needs , from single listings to subscription plans.</li>-->
+<!--                    <li>Priority Support- Get help when you need it with dedicated support to assist in your hiring process.</li>-->
+<!--                  </ul>-->
+<!--                  <button class="btn-1" routerLink="/contact"><i class="fa fa-envelope-o" aria-hidden="true"></i>Contact-->
+<!--                    us-->
+<!--                  </button>-->
+<!--                </div>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="overlay-banner-lg" *ngIf="false">-->
+<!--          <div class="overlay"></div>-->
+<!--          <div class="container">-->
+<!--            <div class="d-flex flex-column align-items-center justify-content-center banner-content">-->
+<!--              <div class="overlay-banner-title">Get the job that's right for you</div>-->
+<!--              <div class="container">-->
+<!--                <div class="overlay-banner-text">We help you find the job of your dreams by providing you a world of-->
+<!--                  opportunities-->
+<!--                  for you. Our Platform gives you personalized job recommendations and provided you with tools and-->
+<!--                  resources-->
+<!--                  to-->
+<!--                  tune up you Skills.-->
+<!--                </div>-->
+<!--              </div>-->
+<!--              <div class="overlay-banner-button"><i class="fa fa-play" aria-hidden="true"></i></div>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+
+<!--        <div class="container">-->
+<!--          <div *ngIf="false" class="row achievements" #achievementsSection>-->
+<!--            <div class="col-12 col-sm-6 col-md-4 achievement">-->
+<!--              <div class="achievement-score" translate="no">{{jobsAchValue}}+</div>-->
+<!--              <div class="achievement-title">AVAILABLE JOBS NOW</div>-->
+<!--            </div>-->
+<!--            <div class="col-12 col-sm-6 col-md-4 achievement">-->
+<!--              <div class="achievement-score" translate="no">{{branchesAchValue}}+</div>-->
+<!--              <div class="achievement-title">COMPANIES</div>-->
+<!--            </div>-->
+<!--            <div class="col-12 col-sm-12 col-md-4 achievement">-->
+<!--              <div class="achievement-score" translate="no">{{countriesAchValue}}+</div>-->
+<!--              <div class="achievement-title">COUNTRIES</div>-->
+<!--            </div>-->
+<!--          </div>-->
+
+<!--          <div style="padding: max(30px, 3vw) 0;">-->
+<!--            <app-hire-card1></app-hire-card1>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--    </div>-->
+
+<!--    <app-footer></app-footer>-->
+<!--  </div>-->
+<!--  <div class="main">-->
+<!--&lt;!&ndash;    <div class="main-cont">&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="main-l">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="l-banner" loading="lazy"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="content">&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          <div class="h1">Do You Need Talented Professionals for Your Team?</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="h1" [innerHTML]="destination"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <button class="get-started" routerLink="/for-companies">Learn More</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      <div class="main-r">&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="r-banner" loading="lazy"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;        <div class="content">&ndash;&gt;-->
+<!--&lt;!&ndash;          &lt;!&ndash;          <div class="h1">Searching for Your Next Career Opportunity?</div>&ndash;&gt;&ndash;&gt;-->
+<!--&lt;!&ndash;          <div class="h1" [innerHTML]="destination2"></div>&ndash;&gt;-->
+<!--&lt;!&ndash;          <button class="get-started" routerLink="/job">Find a Job</button>&ndash;&gt;-->
+<!--&lt;!&ndash;        </div>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="overlay"></div>&ndash;&gt;-->
+
+<!--&lt;!&ndash;      <div class="scroll-here">&ndash;&gt;-->
+<!--&lt;!&ndash;        <p>Scroll Here :)</p>&ndash;&gt;-->
+<!--&lt;!&ndash;        <svg width="30px" height="100%" viewBox="0 0 247 390" version="1.1" xmlns="http://www.w3.org/2000/svg"&ndash;&gt;-->
+<!--&lt;!&ndash;             xmlns:xlink="http://www.w3.org/1999/xlink"&ndash;&gt;-->
+<!--&lt;!&ndash;             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">&ndash;&gt;-->
+<!--&lt;!&ndash;          <path id="wheel" d="M123.359,79.775l0,72.843" style="fill:none;stroke:#fff;stroke-width:20px;"/>&ndash;&gt;-->
+<!--&lt;!&ndash;          <path id="mouse"&ndash;&gt;-->
+<!--&lt;!&ndash;                d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z"&ndash;&gt;-->
+<!--&lt;!&ndash;                style="fill:none;stroke:#fff;stroke-width:20px;"/>&ndash;&gt;-->
+<!--&lt;!&ndash;        </svg>&ndash;&gt;-->
+<!--&lt;!&ndash;      </div>&ndash;&gt;-->
+<!--&lt;!&ndash;    </div>&ndash;&gt;-->
+
+<!--    <div class="main-sub">-->
+<!--      <div class="d-md-flex align-items-center justify-content-center w-100 h-100">-->
+<!--        <div class="content">-->
+<!--          <div class="l-image-wrapper"></div>-->
+<!--          <div class="l-text-wrapper">-->
+<!--            <div class="h1" [innerHTML]="destination"></div>-->
+<!--            <div class="btn-wrapper">-->
+<!--              <button class="get-started" routerLink="/for-companies">Learn More</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--        <div class="content">-->
+<!--          <div class="r-image-wrapper"></div>-->
+<!--          <div class="r-text-wrapper">-->
+<!--            <div class="h1" [innerHTML]="destination2"></div>-->
+<!--            <div class="btn-wrapper">-->
+<!--              <button class="get-started" routerLink="/job">Find a Job</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </div>-->
+<!--      </div>-->
+
+<!--      <div class="scroll-here">-->
+<!--        <p>Scroll Here :)</p>-->
+<!--        <svg width="30px" height="100%" viewBox="0 0 247 390" version="1.1" xmlns="http://www.w3.org/2000/svg"-->
+<!--             style="fill-rule:evenodd;clip-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:1.5;">-->
+<!--          <path id="wheel" d="M123.359,79.775l0,72.843" style="fill:none;stroke:#fff;stroke-width:20px;"/>-->
+<!--          <path id="mouse"-->
+<!--                d="M236.717,123.359c0,-62.565 -50.794,-113.359 -113.358,-113.359c-62.565,0 -113.359,50.794 -113.359,113.359l0,143.237c0,62.565 50.794,113.359 113.359,113.359c62.564,0 113.358,-50.794 113.358,-113.359l0,-143.237Z"-->
+<!--                style="fill:none;stroke:#fff;stroke-width:20px;"/>-->
+<!--        </svg>-->
+<!--      </div>-->
+<!--    </div>-->
+<!--  </div>-->
+<!--</div>-->
+
+<button type="button" id="news_model_open" class="d-none" data-bs-toggle="modal" data-bs-target="#newsLatter"></button>
+<div class="modal fade" id="newsLatter" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+     aria-labelledby="newsLatterLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="newsLatterLabel">Subscribe to our news letter</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="d-flex flex-column gap-2">
+          <p class="mb-0">We will send you our latest news and updates. We hate spams more than you do.</p>
+          <form [formGroup]="newsLetterForm" class="w-100">
+            <div class="form-group">
+              <label for="email">Enter your valid email address *</label>
+              <input type="email" class="form-control" id="email" formControlName="email">
+            </div>
+          </form>
+          <p class="mb-0">By clicking on Subscribe, you agree to our <a href="/terms-and-conditions">Terms of
+            Service</a> and <a href="/privacy-policy">Privacy Policy</a>.</p>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="news_model_close" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn-1" [disabled]="loading"
+                (click)="subscribeNewsLatter()">{{loading ? 'Subscribing...' : 'Subscribe'}}</button>
+      </div>
+    </div>
+  </div>
+</div>

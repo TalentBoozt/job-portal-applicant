@@ -1,0 +1,136 @@
+.btn-2{
+  width: fit-content;
+  height: fit-content;
+  padding: 8px 10px;
+  border-radius: 0 10px 10px 0;
+  position: absolute;
+  top: 100px;
+  left: 0;
+  z-index: 9;
+  mat-icon {
+    width: fit-content;
+    height: fit-content;
+    font-size: 18px;
+    padding: 0;
+    margin: 0;
+  }
+}
+
+.view-btn{
+  background-color: transparent;
+  color: var(--color-text-200);
+  padding: 5px 10px;
+  border-radius: 20px;
+  border: 2px solid var(--color-secondary-600);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+
+  &:hover{
+    background-color: var(--color-secondary-600);
+    color: #fff;
+  }
+}
+
+.drawer-container {
+  width: 100%;
+  max-height: 100vh;
+
+  .drawer {
+    width: max(250px, 100px);
+    height: 100%;
+
+    .accordian{
+      margin-bottom: 26px;
+      overflow-y: auto;
+
+      ul{
+        list-style: none;
+        padding: 0 0 0 24px;
+        li{
+          padding: 10px 5px;
+          cursor: pointer;
+          color: var(--color-text-300);
+        }
+        li:hover{
+          background-color: var(--color-surface-mixed-400);
+          color: var(--color-text-100);
+          cursor: pointer;
+        }
+      }
+    }
+
+    .footer-tag{
+      width: 100%;
+      height: 24px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-400);
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      font-size: 12px;
+      background-color: var(--color-surface-200);
+    }
+
+    ul{
+      list-style: none;
+      padding: 0;
+      li{
+        padding: 10px 5px;
+        cursor: pointer;
+        color: var(--color-text-300);
+      }
+      li:hover{
+        background-color: var(--color-surface-mixed-400);
+        color: var(--color-text-100);
+        cursor: pointer;
+      }
+
+      .list-2{
+        padding-left: 24px;
+      }
+    }
+    span{
+      font-size: 12px;
+      margin-left: 20px;
+    }
+  }
+
+  mat-drawer-content {
+    width: 100%;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    min-height: calc(100vh - 70px);
+  }
+
+}
+
+.card-1{
+  background-color: var(--color-surface-100);
+  position: relative;
+  margin: max(20px, 1.2vw) 0;
+
+  .top{
+    background-color: var(--color-primary-600-opacity-3);
+    padding: 30px;
+
+    h3{
+      font-size: 20px;
+    }
+  }
+
+  .bottom{
+    padding: 30px;
+  }
+
+  p{
+    margin: 0;
+  }
+
+  .views-tag{
+    font-size: 14px;
+    color: var(--color-text-400);
+  }
+}

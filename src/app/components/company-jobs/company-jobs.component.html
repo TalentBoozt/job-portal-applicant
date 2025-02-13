@@ -1,0 +1,78 @@
+<div class="top-banner">
+  <div class="curved-div">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>Open Positions</h1>
+    <p>Talent Boozt > Company > <span>Positions</span></p>
+  </div>
+</div>
+
+<div class="container">
+  <app-hire-card1></app-hire-card1>
+
+  <div class="popular-jobs">
+    <p>Public Job Ads({{filteredJobs.length ? filteredJobs.length : 0}}) of Total Posted Jobs({{postedJobs?.postedJobs?.length ? postedJobs?.postedJobs?.length : 0}})</p>
+    <div class="row">
+      <div class="col-12 col-md-4 mb-3" *ngFor="let job of filteredJobs">
+        <div class="card-1">
+          <div class="card-top">
+            <div class="card-top-left d-flex align-items-center">
+              <div class="logo-icon-wrapper">
+                <div class="logo-icon">
+                  <img
+                    [src]="postedJobs?.companyLogo ? postedJobs?.companyLogo : './assets/imgs/shared/default_org_logo.svg'"
+                    alt="{{job.companyName}}">
+                </div>
+              </div>
+              <div class="d-flex flex-column align-items-start justify-content-between">
+                <div class="company-name">{{postedJobs?.companyName ? postedJobs?.companyName : 'N/A'}}</div>
+                <div class="opens-ago">{{job.datePosted | timeAgo}}</div>
+              </div>
+            </div>
+            <div class="card-top-right">
+              <div class="visit-link-circle" (click)="userSavedIds.includes(job.id) ? removeFav(job.id) :saveFav(job.id)">
+                <i class="material-icons" [ngClass]="userSavedIds.includes(job.id) ? 'liked' : ''">favorite_border</i>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-content">
+            <div class="card-content-left">
+              <div class="d-flex flex-column align-items-start">
+                <div class="job-title" routerLink="/job-details/{{job.id}}">{{job.title}}</div>
+                <div class="open-positions">Total Openings: {{job.totalOpenings}}</div>
+              </div>
+            </div>
+          </div>
+          <hr>
+          <div class="card-bottom">
+            <div *ngIf="job.companyLevel != '3' || job.companyLevel != '4'"></div>
+            <div class="card-bottom-left" *ngIf="job.companyLevel == '3' || job.companyLevel == '4'">
+              <i class="material-icons">verified</i>
+              <span>Verified</span>
+            </div>
+            <div class="card-bottom-right">
+              <i class="fa fa-map-marker" aria-hidden="true"></i>
+              <span>{{job.location}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && serverError">
+    <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && !postedJobs?.postedJobs">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && !postedJobs?.postedJobs || unexpectedError">
+    <app-forbidden></app-forbidden>
+  </div>
+</div>
