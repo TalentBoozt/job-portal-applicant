@@ -1,0 +1,7 @@
+<div class="d-flex align-items-center justify-content-center w-100">
+  <div class="year-navigation">
+    <button (click)="changeYear(-1)" [disabled]="year <= 2022">&#9664;</button>
+    <span>{{ year }}</span>
+    <button (click)="changeYear(1)" [disabled]="year >= thisYear">&#9654;</button>
+  </div>
+</div>

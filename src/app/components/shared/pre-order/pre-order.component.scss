@@ -1,0 +1,109 @@
+.card-checkout{
+  border: none;
+  background-color: var(--color-surface-100);
+  padding: 0 0 12px 0;
+  width: 100%;
+  max-width: 600px;
+  margin-top: 0;
+  margin-bottom: max(20px, 2.5vw);
+  border-radius: 16px;
+
+  .hr{
+    width: 100%;
+    height: 1px;
+    background-color: var(--color-surface-mixed-400);
+  }
+
+  .card-title, .card-body, .card-bottom{
+    padding: 12px max(20px, 2.5vw);
+  }
+
+  .card-title{
+    font-size: 24px;
+    font-weight: 500;
+    color: var(--color-text-100);
+  }
+
+  .card-title.sm{
+    font-size: 22px;
+  }
+
+  .card-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 24px max(20px, 2.5vw);
+  }
+}
+
+h3{
+  font-family: "Poppins", sans-serif;
+  font-size: 22px;
+}
+
+ul{
+  margin: 0 0 10px 0;
+  padding: 0;
+  list-style: none;
+
+  li{
+    margin: 8px 0;
+    position: relative;
+    text-align: left;
+    display: flex;
+    align-items: center;
+  }
+  li:before{
+    //content: 'check_circle_outline';
+    font-family: 'Material Icons';
+    font-size: 18px;
+    color: var(--color-primary-200);
+    margin-right: 6px;
+  }
+}
+
+ul.second{
+  margin-left: 20px;
+
+  li:before{
+    content: 'arrow_right_alt';
+  }
+}
+
+.hangouts-wrapper{
+  width: 100%;
+  max-width: 800px;
+  background-color: var(--color-surface-100);
+  border-radius: 12px;
+  min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px max(20px, 3vw);
+  margin: max(20px, 2vw) 0;
+  box-shadow: 1px 0 12px rgba(0,0,0,.5);
+
+  .image{
+    width: 120px;
+    height: 120px;
+
+    img{
+      width: 100%;
+    }
+  }
+
+  .message{
+    width: 100%;
+    padding: 8px 16px;
+
+    p{
+      margin: 0;
+      font-style: italic;
+      font-weight: 500;
+
+      span{
+        font-weight: 400;
+      }
+    }
+  }
+}

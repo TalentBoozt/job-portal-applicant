@@ -1,0 +1,30 @@
+<div class="year-wrapper">
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="days-count">
+      <p>{{loginDates.length ? loginDates.length: 0}} active days in the last year</p>
+    </div>
+  </div>
+
+  <!-- Month Labels -->
+  <div class="month-labels">
+    <div *ngFor="let month of months" class="month-label">{{ month }}</div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center grid-wrapper">
+    <div class="day-labels">
+      <div *ngFor="let day of days" class="day-label">{{ day }}</div>
+    </div>
+
+    <!-- Grid -->
+    <div class="grid">
+      <!-- Days -->
+      <div
+        *ngFor="let day of yearDays"
+        class="day-square"
+        [ngClass]="{'logged-in': loginDates.includes(day.date), 'hide': !day.date}"
+        [attr.title]="day.date || ''">
+      </div>
+    </div>
+  </div>
+
+</div>
