@@ -1,0 +1,11 @@
+/
+home
+about
+job
+companies
+privacy-policy
+terms-and-conditions
+pricing
+faq
+for-companies
+employees

@@ -1,0 +1,140 @@
+<div [ngClass]="{'theme-light': !themeService.isDarkMode(), 'theme-dark': themeService.isDarkMode()}"
+     style="max-height: 100vh;">
+
+  <div class="w-100 main-body">
+
+    <div class="toggle-contacts-button">
+      <div class="contacts-btn-wrapper">
+        <div class="contact-btn" [ngClass]="showContacts ? 'active' : ''" (click)="toggleContacts()">
+          <i class="material-icons">wechat</i>
+        </div>
+        <div class="contacts-section" [ngClass]="showContacts ? 'active' : ''">
+          <!-- WhatsApp Direct Chat -->
+          <div class="contact whatsapp">
+            <a href="https://wa.me/+94744104850" target="_blank">
+              <img src="https://img.icons8.com/color/48/whatsapp--v1.png" alt="WhatsApp Chat" loading="lazy" width="48"
+                   height="48">
+            </a>
+          </div>
+
+          <!-- Tawk.to Chat -->
+          <div class="contact tawk">
+            <a href="https://tawk.to/chat/6404d90d4247f20fefe41dac/1gqpevnk4" target="_blank">
+              <img
+                src="https://img.icons8.com/external-flaticons-flat-flat-icons/64/external-live-chat-e-commerce-flaticons-flat-flat-icons.png"
+                alt="Tawk.to Chat" loading="lazy" width="48" height="48">
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ui-settings">
+      <div class="ui-btn-wrapper">
+        <div class="ui-btn" [ngClass]="isUiSettings ? 'active' : ''" (click)="openUiSettings()">
+          <i class="material-icons">settings</i>
+        </div>
+        <div class="ui-settings-body" [ngClass]="isUiSettings ? 'active' : ''">
+          <div class="theme-wrapper">
+            <div class="theme-label">Theme Settings</div>
+            <div class="theme-options">
+              <ul class="theme-shade">
+                <li (click)="changeColorShading('blue')">
+                  <div class="color-btn blue"></div>
+                  <div class="color-name">Blue</div>
+                </li>
+                <li (click)="changeColorShading('green')">
+                  <div class="color-btn green"></div>
+                  <div class="color-name">Green</div>
+                </li>
+                <li (click)="changeColorShading('orange')">
+                  <div class="color-btn orange"></div>
+                  <div class="color-name">Orange</div>
+                </li>
+                <li (click)="changeColorShading('red')">
+                  <div class="color-btn red"></div>
+                  <div class="color-name">Red</div>
+                </li>
+                <li (click)="changeColorShading('purple')">
+                  <div class="color-btn purple"></div>
+                  <div class="color-name">Purple</div>
+                </li>
+                <li (click)="changeColorShading('mixed')">
+                  <div class="color-btn mixed"></div>
+                  <div class="color-name">Mixed</div>
+                </li>
+              </ul>
+
+              <button class="theme-btn" (click)="toggleTheme()" title="Theme">
+                <img ngSrc="./assets/imgs/shared/moon.svg" alt="dark" height="24" width="24">
+                <img
+                  [src]="themeService.isDarkMode()?'./assets/imgs/shared/toggle-off.svg':'./assets/imgs/shared/toggle-on.svg'"
+                  alt="theme" height="40" width="40">
+                <img ngSrc="./assets/imgs/shared/sun.svg" alt="light" height="24" width="24">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="translate">
+      <div class="lang-btn-wrapper">
+        <div class="lang-btn" [ngClass]="isTranslator ? 'active' : ''" (click)="clickTranslate()">
+          <i class="material-icons">translate</i>
+        </div>
+        <div id="google_translate_element" [ngClass]="isTranslator ? 'active' : ''"></div>
+      </div>
+    </div>
+
+    <div class="cookie-banner" *ngIf="!isCookiesAccepted">
+      <p>This website uses cookies to ensure you get the best experience on our website. <a routerLink="/privacy-policy">Privacy Policy</a></p>
+      <button (click)="acceptCookies()">GOT IT</button>
+    </div>
+
+    <app-header *ngIf="showNavbar"></app-header>
+
+    <app-system-notification-view></app-system-notification-view>
+
+    <router-outlet (activate)="toggleCommonComponent($event)"></router-outlet>
+
+    <app-footer *ngIf="showFooter"></app-footer>
+  </div>
+
+  <button type="button" id="news_model_open_main" class="d-none" data-bs-toggle="modal"
+          data-bs-target="#newsLatterMain"></button>
+
+  <!-- Modal -->
+  <div class="modal fade" id="newsLatterMain" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+       aria-labelledby="newsLatterMainLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="newsLatterMainLabel">Subscribe to our news letter</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="d-flex flex-column gap-2">
+            <p class="mb-0">We will send you our latest news and updates. We hate spams more than you do.</p>
+            <form [formGroup]="newsLetterForm" class="w-100">
+              <div class="form-group">
+                <label for="emailMain">Enter your valid email address *</label>
+                <input type="email" class="form-control" id="emailMain" formControlName="email">
+              </div>
+            </form>
+            <p class="mb-0">By clicking on Subscribe, you agree to our <a href="/terms-and-conditions">Terms of
+              Service</a>
+              and <a href="/privacy-policy">Privacy Policy</a>.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="news_model_close_main" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+          </button>
+          <button type="button" class="btn-1" [disabled]="loading"
+                  (click)="subscribeNewsLatter()">{{loading ? 'Subscribing...' : 'Subscribe'}}</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
