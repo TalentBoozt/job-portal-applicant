@@ -1,0 +1,111 @@
+.title-1{
+  font-weight: 420;
+  color: var(--color-text-100);
+  font-size: 18px;
+}
+
+.left-side{
+  position: sticky;
+  height: fit-content;
+  top: 80px;
+
+  @media screen and (max-width: 768px) {
+    position: static;
+  }
+}
+.job-details-card{
+  background-color: var(--color-surface-200);
+  border-radius: 12px;
+  border: 1px solid var(--color-surface-mixed-300);
+  -webkit-box-shadow: 0 1px 2px 0 var(--color-box-shadow-100);
+  -moz-box-shadow: 0 1px 2px 0 var(--color-box-shadow-100);
+  box-shadow: 0 1px 2px 0 var(--color-box-shadow-100);
+  margin-bottom: 20px;
+
+  hr{
+    border: none;
+    height: .1rem;
+    margin: 0;
+    opacity: 1;
+    background-color: var(--color-surface-mixed-300);
+  }
+
+  .job-details-card-top, .job-details-card-content{
+    padding: 20px 30px;
+  }
+
+  .job-details-card-top{
+    display: flex;
+    align-items: center;
+  }
+
+  .job-details-card-content{
+    .job-info-item{
+      display: flex;
+      align-items: center;
+      margin-bottom: 16px;
+
+      i{
+        margin-right: 12px;
+        color: var(--color-text-100);
+        //font-size: 20px;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: var(--color-primary-600-opacity-3);
+      }
+
+      p{
+        margin-bottom: 0;
+      }
+
+      .tag{
+        color: var(--color-text-100);
+        font-size: 17px;
+      }
+
+      .tag-data{
+        color: var(--color-primary-200);
+        font-size: 14px;
+      }
+
+      &:last-child{
+        margin-bottom: 0;
+      }
+    }
+  }
+}
+
+.job-description{
+  max-width: clamp(320px, 90%, 1000px);
+  accent-color: var(--color-primary-100);
+  margin-bottom: 20px;
+
+  ul{
+    margin: 0 0 10px 0;
+    padding: 0;
+    list-style: none;
+
+    li{
+      margin: 8px 0;
+      position: relative;
+      text-align: left;
+    }
+    li:before{
+      content: 'arrow_right_alt';
+      font-family: 'Material Icons';
+      color: var(--color-primary-200);
+      margin-right: 6px;
+    }
+  }
+}
+
+.btn-1{
+  &:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}

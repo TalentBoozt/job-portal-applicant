@@ -1,0 +1,77 @@
+<div class="top-banner">
+  <div class="curved-div">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>My Saved Jobs</h1>
+  </div>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-2">
+      <div class="card-1 mb-2">
+        <div class="py-3 px-5 px-lg-3">
+          <div class="d-flex align-items-center justify-content-start">
+            <i class="fa fa-bookmark-o me-3" aria-hidden="true"></i>
+            <p class="m-0 b-p">My Items</p>
+          </div>
+        </div>
+      </div>
+      <div class="card-1 mt-0">
+        <div class="py-3 px-5 px-lg-3">
+          <p>Getting ready for the interview</p>
+          <div class="d-flex align-items-center justify-content-start" style="cursor: pointer" routerLink="/interview-prep">
+            <i class="fa fa-book me-3" aria-hidden="true"></i>
+            <p class="m-0 b-p">Learn More</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-6">
+      <div class="card-1">
+        <div class="py-3 px-4">
+          <h4>My Jobs</h4>
+        </div>
+        <ul class="nav nav-tabs nav-tabs-style-1">
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('saved')"
+               [class.active]="isActive('saved')">Saved</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('inprogress')"
+               [class.active]="isActive('inprogress')">In progress</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('applied')"
+               [class.active]="isActive('applied')">Applied</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" aria-current="page" (click)="navigateBetweenTabs('archived')"
+               [class.active]="isActive('archived')">Archived</a>
+          </li>
+        </ul>
+
+        <div class="py-3 px-4">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-lg-4">
+      <div class="card-1">
+        <div class="random-hint-card">
+          <div class="title">{{selectedJobHint.title}}</div>
+          <ul class="list-1">
+            <li *ngFor="let l of selectedJobHint.points"><strong>{{l.strong}} </strong>
+              {{l.text}}
+              <ul *ngIf="l.list" class="list-2">
+                <li *ngFor="let li of l.list"><strong>{{li.strong}} </strong>{{li.text}}</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

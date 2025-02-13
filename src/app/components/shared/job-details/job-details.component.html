@@ -1,0 +1,187 @@
+<div class="top-banner" *ngFor="let p of filterJobData()">
+  <div class="curved-div" [ngStyle]="{'background-image': p.jobBanner ? 'url(' + p.jobBanner + ')' : '', 'background-size': p.jobBanner ? '100vw 100%':''}">
+    <div class="overlay" *ngIf="!p.jobBanner"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>{{p.title}}</h1>
+    <p>Talent Boozt > Job Details > <span>{{p.title}}</span></p>
+  </div>
+</div>
+
+<div class="container" style="max-width: clamp(320px, 90%, 1200px);">
+  <div class="row" *ngFor="let j of filterJobData()">
+    <div class="col-12 col-md-4 col-lg-3 left-side">
+      <div class="job-details-card">
+        <div class="job-details-card-top">
+          <div class="title-1">Recruiter Information</div>
+        </div>
+        <hr>
+        <div class="job-details-card-content">
+          <div class="job-info-item">
+            <i class="material-icons">business</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Company:</p>
+              <p class="tag-data">{{companyName}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">call_made</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Visit Us:</p>
+              <a class="tag-data" routerLink="/business-profile/{{j.companyId}}" target="_blank">talentboozt/{{companyName}}</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="job-details-card">
+        <div class="job-details-card-top">
+          <div class="title-1">Job Information</div>
+        </div>
+        <hr>
+        <div class="job-details-card-content">
+          <div class="job-info-item">
+            <i class="material-icons">how_to_reg</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Employee Type:</p>
+              <p class="tag-data">{{j.employeeType}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">location_pin</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Location:</p>
+              <p class="tag-data">{{j.location}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">personal_video</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Job Type:</p>
+              <p class="tag-data">{{j.jobType}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">cases</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Experience:</p>
+              <p class="tag-data">{{j.exShortDesc}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">book</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Qualifications:</p>
+              <p class="tag-data">{{j.eduShortDesc}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">attach_money</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Salary:</p>
+              <p class="tag-data">${{j.minSalary}} - ${{j.maxSalary}}</p>
+            </div>
+          </div>
+          <div class="job-info-item">
+            <i class="material-icons">access_time</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Date Posted:</p>
+              <p class="tag-data">{{j.datePosted | dateFormat}}</p>
+            </div>
+          </div>
+          <hr>
+          <div class="job-info-item">
+            <i class="material-icons">favorite_border</i>
+            <div class="d-flex flex-column">
+              <p class="tag">Save for later:</p>
+              <button class="btn-1" [disabled]="userAppliedIds.includes(j.id)" (click)="userSavedIds.includes(j.id) ? removeFav(j.id) :saveFav(j.id)">{{userSavedIds.includes(j.id) ? 'Saved' : userAppliedIds.includes(j.id) ? 'Applied' : 'Save'}}</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 col-md-8 col-lg-9">
+      <div class="d-flex align-items-center justify-content-center w-100">
+        <div class="job-description">
+          <div class="title-1 mb-2">Job Description:</div>
+          <p *ngFor="let d of j.description.split('\n')">{{d}}</p>
+
+          <div *ngIf="j.requirements">
+            <div class="title-1 mb-2">Requirements:</div>
+            <ul *ngFor="let re of j.requirements.split('\n')">
+              <li>{{re}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.experience">
+            <div class="title-1 mb-2">Required Experience:</div>
+            <ul *ngFor="let ex of j.experience.split('\n')">
+              <li>{{ex}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.education">
+            <div class="title-1 mb-2">Required Educational Qualifications:</div>
+            <ul *ngFor="let ed of j.education.split('\n')">
+              <li>{{ed}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.qualifications">
+            <div class="title-1 mb-2">Required Additional Qualifications:</div>
+            <ul *ngFor="let q of j.qualifications.split('\n')">
+              <li>{{q}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.skills">
+            <div class="title-1 mb-2">Skills:</div>
+            <ul *ngFor="let sk of j.skills.split('\n')">
+              <li>{{sk}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.responsibilities">
+            <div class="title-1 mb-2">Responsibilities and Duties:</div>
+            <ul *ngFor="let r of j.responsibilities.split('\n')">
+              <li>{{r}}</li>
+            </ul>
+          </div>
+          <div *ngIf="j.offer">
+            <div class="title-1 mb-2">What You Will Get:</div>
+            <ul *ngFor="let o of j.offer.split('\n')">
+              <li>{{o}}</li>
+            </ul>
+          </div>
+
+          <button class="btn-1" (click)="navigateToApplyJob(j.redirectUrl)" [disabled]="userAppliedIds.includes(j.id)">{{userAppliedIds.includes(j.id) ? 'Applied' : 'Apply Now'}}</button>
+          <div class="warn-msg" *ngIf="j.redirectUrl"><i class="material-icons me-1 mt-1">warning</i>This job post will redirect you to a third party website.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="!loading && serverError">
+    <app-failed-to-load-data></app-failed-to-load-data>
+  </div>
+  <div *ngIf="notFound && filterJobData().length == 0">
+    <app-result-not-found></app-result-not-found>
+  </div>
+  <div *ngIf="corsError">
+    <app-network-error></app-network-error>
+  </div>
+  <div *ngIf="forbidden && filterJobData().length == 0 || unexpectedError">
+    <app-forbidden></app-forbidden>
+  </div>
+
+  <div class="sub-topic-section" *ngIf="filterJobsAds().length > 0">
+    <h3>Related Vacancies</h3>
+    <p>Discover opportunities around the world. Get salary insights and company reviews from trusted sources.</p>
+  </div>
+
+  <div class="container popular-jobs" *ngIf="filterJobsAds().length > 0">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 col-md-6 mb-4" *ngFor="let p of filterJobsAds() | truncateComments: 2; let i = index">
+          <app-job-post-card1 [p]="p" [userSavedIds]="userSavedIds" [employeeId]="employeeId" (savedJobChanged)="onJobSavedOrRemoved()"></app-job-post-card1>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-job-ad-card1></app-job-ad-card1>
+</div>
