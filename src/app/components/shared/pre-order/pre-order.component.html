@@ -1,0 +1,71 @@
+<div class="top-banner">
+  <div class="curved-div">
+    <div class="overlay"></div>
+  </div>
+
+  <div class="d-flex align-items-center justify-content-center flex-column w-100 h100 banner-cont">
+    <h1>Thank You for Your Interest!</h1>
+    <p>We’re thrilled to have you on board. Just one more step to secure your spot!</p>
+  </div>
+</div>
+
+<app-page-loading *ngIf="loading"></app-page-loading>
+
+<div class="container">
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="card-checkout form-card-1">
+      <div class="card-title sm">Complete Your Pre-order</div>
+      <div class="hr"></div>
+      <div class="card-body">
+        <form [formGroup]="subscriptionForm">
+          <div class="row form-wrapper">
+            <div class="col-12">
+              <div class="form-group">
+                <label for="name">Your Name *</label>
+                <input type="text" class="form-control" id="name" placeholder="John Doe" formControlName="name">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="email">Email *</label>
+                <input type="email" class="form-control" id="email" placeholder="Doe" formControlName="email">
+              </div>
+            </div>
+            <div class="col-12">
+              <div class="form-group">
+                <label for="product">Select Product *</label>
+                <select class="form-control" id="product" formControlName="product">
+                  <option>Pro version</option>
+                  <option>Premium Version</option>
+                </select>
+              </div>
+            </div>
+            <div class="col-12">
+              <button class="btn-1 w-100" (click)="order()">Submit & Confirm My Pre-order</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <h3>What Happens Next?</h3>
+  <ul>
+    <li>After submitting your details, you will:</li>
+    <ul class="second">
+      <li>Receive a confirmation email with your pre-order details.</li>
+      <li>Get notified about updates, exclusive offers, and early access features.</li>
+      <li>Be ready to experience our game-changing platform before the official launch.</li>
+    </ul>
+  </ul>
+
+  <div class="d-flex align-items-center justify-content-center w-100">
+    <div class="hangouts-wrapper">
+      <div class="image">
+        <img src="./assets/imgs/shared/dinosaur.svg" alt="icon">
+      </div>
+      <div class="message"><p>Your trust means everything to us! We’re committed to creating the best platform to meet
+        your needs. Thank you for being a part of our journey! <span>- Team Talentboozt</span></p></div>
+    </div>
+  </div>
+</div>

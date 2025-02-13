@@ -1,0 +1,49 @@
+.notification-bar {
+  background-color: var(--color-primary-100);
+  color: #fff;
+  padding: 10px;
+  text-align: center;
+  font-weight: 450;
+  position: fixed;
+  top: 70px;
+  width: 100%;
+  height: auto;
+  left: 0;
+  z-index: 1000;
+
+  .notification-icon{
+    margin-right: 8px;
+  }
+
+  .notification-message{
+    font-size: 14px;
+  }
+
+  .notification-time{
+    font-weight: 400;
+    font-size: 13px;
+  }
+
+  .link{
+    margin-left: 5px;
+    color: #fff;
+    text-decoration: underline;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 14px;
+
+    a{
+      text-decoration: none;
+      color: #fff;
+    }
+  }
+
+  .close-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  }
+}

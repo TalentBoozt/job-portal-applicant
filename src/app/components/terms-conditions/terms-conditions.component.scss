@@ -1,0 +1,50 @@
+.card-1{
+  background-color: var(--color-surface-200);
+  border: 1px solid var(--color-surface-mixed-300);
+  padding: max(30px, 3vw) max(40px, 5vw);
+  border-radius: 8px;
+  min-height: 400px;
+  text-align: justify;
+
+  h5{
+    margin-bottom: 16px;
+  }
+
+  ul{
+    margin: 0 0 10px 0;
+    padding: 0;
+    list-style: none;
+
+    li{
+      margin: 8px 0;
+      position: relative;
+      text-align: left;
+    }
+    li:before{
+      content: 'arrow_right_alt';
+      font-family: 'Material Icons';
+      color: var(--color-primary-200);
+      margin-right: 6px;
+    }
+  }
+
+  .date-tag{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    color: var(--color-text-300);
+    font-size: 14px;
+    margin-top: 20px;
+  }
+}
+
+strong{
+  font-weight: 500;
+}
+
+hr{
+  border: none;
+  border-top: 1px solid var(--color-surface-mixed-600);
+  margin: 20px 0;
+}

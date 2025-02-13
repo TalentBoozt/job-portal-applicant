@@ -1,0 +1,17 @@
+<div *ngIf="notifications.length > 0">
+  <div *ngFor="let notification of notifications">
+    <div class="notification-bar d-flex align-items-center justify-content-between" *ngIf="notification.active">
+      <div class="d-flex align-items-center">
+        <div class="notification-icon">
+          <i class="fa fa-bell" [ngClass]="notification.type"></i>
+        </div>
+        <div class="notification-message">{{ notification.message }}</div>
+        <div class="notification-time d-none d-lg-block">({{ notification.startTime }} {{notification.endTime ? ' - ' + notification.endTime : ''}})</div>
+        <div class="link" *ngIf="notification.url"><a href="{{notification.url}}">learn more</a></div>
+      </div>
+      <div class="close-btn">
+        <i class="fa fa-close" (click)="closeNotification(notification)"></i>
+      </div>
+    </div>
+  </div>
+</div>

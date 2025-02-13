@@ -1,0 +1,41 @@
+.year-navigation {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 15px;
+  max-width: 644px;
+  min-width: 650px;
+  color: var(--color-text-100);
+
+  @media screen and (max-width: 992px){
+    min-width: 350px;
+  }
+}
+
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  outline: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 12px;
+
+  &:nth-child(1){
+    border-radius: 5px 0 0 5px;
+  }
+
+  &:nth-child(3){
+    border-radius: 0 5px 5px 0;
+  }
+}
+
+button:hover {
+  background-color: #388e3c;
+}
+
+button:disabled {
+  opacity: .8;
+  cursor: not-allowed;
+}
