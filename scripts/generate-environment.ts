@@ -1,6 +1,17 @@
 const path = require('path');
 const fs = require('fs');
 
+const environmentFilePath = path.join(__dirname, '..', 'src', 'environments', 'environment.ts');
+
+console.log(`Generating environment file at ${environmentFilePath}`);
+
+// After generating, check if file is created
+if (fs.existsSync(environmentFilePath)) {
+  console.log('Environment file generated successfully.');
+} else {
+  console.error('Environment file was not generated!');
+}
+
 // Get environment variables from process.env (set by Vercel)
 const environment = {
   production: true,
