@@ -29,14 +29,12 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/_redirects",
               "src/site.webmanifest",
-              "src/.nojekyll",
               "src/sitemap.xml",
               "src/robots.txt",
-              "src/netlify.toml",
               "src/android-chrome-192x192.png",
-              "src/android-chrome-512x512.png"
+              "src/android-chrome-512x512.png",
+              "src/vercel.json"
             ],
             "styles": [
               "src/styles.scss"
