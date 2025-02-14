@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "prebuild": "ts-node generate-environment.ts",
+    "build": "ng build --prod && ng run client:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run client:serve-ssr",
@@ -35,6 +36,7 @@
     "chart.js": "^4.4.7",
     "crypto-js": "^4.2.0",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.4.7",
     "express": "^4.18.2",
     "firebase": "^11.1.0",
     "gapi": "^0.0.3",
