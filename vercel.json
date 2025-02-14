@@ -4,16 +4,12 @@
     {
       "src": "server.ts",
       "use": "@vercel/node"
-    },
-    {
-      "src": "dist/client/browser/**",
-      "use": "@vercel/static"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "/dist/client/browser/$1"
+      "dest": "server.ts"
     }
   ]
 }
