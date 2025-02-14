@@ -131,7 +131,7 @@
           "builder": "@ngx-env/builder:server",
           "options": {
             "outputPath": "dist/client/server",
-            "main": "src/main.server.ts",
+            "main": "server.ts",
             "tsConfig": "tsconfig.server.json",
             "inlineStyleLanguage": "scss"
           },
