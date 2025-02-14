@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "prebuild": "ts-node generate-environment.ts",
+    "prebuild": "ts-node scripts/generate-environment.ts",
     "build": "ng build --prod && ng run client:server",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
