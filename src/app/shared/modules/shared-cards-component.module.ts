@@ -7,7 +7,6 @@ import {JobPostCard2Component} from "../../components/shared/cards/job-post-card
 import {CompanyCard1Component} from "../../components/shared/cards/company-card1/company-card1.component";
 import {HireCard1Component} from "../../components/shared/cards/hire-card1/hire-card1.component";
 import {JobAdCard1Component} from "../../components/shared/cards/job-ad-card1/job-ad-card1.component";
-import {OfferCard1Component} from "../../components/shared/cards/offer-card1/offer-card1.component";
 
 @NgModule({
   declarations: [
@@ -15,8 +14,7 @@ import {OfferCard1Component} from "../../components/shared/cards/offer-card1/off
     JobPostCard2Component,
     CompanyCard1Component,
     HireCard1Component,
-    JobAdCard1Component,
-    OfferCard1Component
+    JobAdCard1Component
   ],
     imports: [
         NgIf,
@@ -30,8 +28,7 @@ import {OfferCard1Component} from "../../components/shared/cards/offer-card1/off
     JobPostCard2Component,
     CompanyCard1Component,
     HireCard1Component,
-    JobAdCard1Component,
-    OfferCard1Component
+    JobAdCard1Component
   ]
 })
 export class SharedCardsComponentModule {}
