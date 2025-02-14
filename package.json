@@ -1,7 +1,6 @@
 {
   "name": "client",
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -10,8 +9,8 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "dev:ssr": "ng run client:serve-ssr",
+    "build:ssr": "ng build && ng run client:server --configuration production",
     "serve:ssr": "node dist/client/server/main.js",
-    "build:ssr": "ng build && ng run client:server",
     "prerender": "ng run client:prerender"
   },
   "private": true,
